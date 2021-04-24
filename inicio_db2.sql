@@ -3,8 +3,7 @@
 
 -- ######################  DDL #####################################
 
-CREATE DATABASE proyecto;
---USE proyecto;
+--CREATE DATABASE proyecto;
 
 
 -------------------------------------------------------
@@ -30,19 +29,20 @@ CREATE TYPE opcion_pago AS ENUM ('personal', 'online');
 -------------------------------------------------------
 -- persona (clase base)
 -------------------------------------------------------
+DROP TABLE IF EXISTS persona;
 
 CREATE TABLE IF NOT EXISTS persona(
-    nombre VARCHAR(15),
+    nombre VARCHAR(25),
     apellidos VARCHAR(25),
-    tfno VARCHAR(15),
-    email VARCHAR(25),
+    tfno VARCHAR(25),
+    email VARCHAR(40),
     edad SMALLINT,
     sexo VARCHAR(10),
     localidad VARCHAR(20),
     estado_civ estado_civil,
     estudio VARCHAR(20),
-    ocupacion VARCHAR(15),
-    hobby VARCHAR(15),
+    ocupacion VARCHAR(25),
+    hobby VARCHAR(25),
     familia_numerosa BOOLEAN
 );
 
@@ -50,8 +50,9 @@ CREATE TABLE IF NOT EXISTS persona(
 -------------------------------------------------------
 -- clienteCRM hereda de persona
 -------------------------------------------------------
+DROP TABLE IF EXISTS clienteCRM CASCADE;
 
-CREATE TABLE IF NOT EXISTS clienteCRM(
+CREATE TABLE clienteCRM(
 
     nro_socio INT GENERATED ALWAYS AS IDENTITY,
     fecha_alta TIMESTAMPTZ DEFAULT Now(),
@@ -67,7 +68,7 @@ ALTER TABLE clienteCRM
     ALTER COLUMN tfno SET NOT NULL,
     ALTER COLUMN nombre SET NOT NULL,
     ALTER COLUMN apellidos SET NOT NULL,
-    ALTER COLUMN localidad SET NOT NULL
+    ALTER COLUMN localidad SET NOT NULL,
     ALTER COLUMN  sexo SET NOT NULL;
 
 ALTER TABLE clienteCRM 
@@ -89,7 +90,9 @@ ALTER TABLE clienteCRM
 -- empleadoRRHH hereda de persona
 -------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS empleadoRRHH(
+DROP TABLE IF EXISTS empleadoRRHH CASCADE;
+
+CREATE TABLE empleadoRRHH(
     nro_empleado INT GENERATED ALWAYS AS IDENTITY,
     dni_empl VARCHAR(15) NOT NULL,
     tipo_empl tipo_empleado NOT NULL,           -- uso ENUMS
@@ -123,7 +126,9 @@ ALTER TABLE empleadoRRHH
 -- Tabla pedidoCliente
 -------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS pedidoCliente(
+DROP TABLE IF EXISTS pedidoCliente CASCADE;
+
+CREATE TABLE pedidoCliente(
     nro_pedido INT GENERATED ALWAYS AS IDENTITY,
     estado_p estado_pedido DEFAULT 'solicitado',
     tipo_p tipo_pedido NOT NULL,
@@ -157,7 +162,9 @@ ALTER TABLE pedidocliente
 -- Tabla almacenProductos
 -------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS almacenProductos(
+DROP TABLE IF EXISTS almacenProductos CASCADE;
+
+CREATE TABLE almacenProductos(
     nro_producto INT GENERATED ALWAYS AS IDENTITY,
     id_producto INT NOT NULL,
     categoria_prod VARCHAR(10),
@@ -179,7 +186,9 @@ CREATE TABLE IF NOT EXISTS almacenProductos(
 -- pues, en ese caso, cambiaría de estado el pedido; es decir, se debe justificar.
 -------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS elementosPedido (
+DROP TABLE IF EXISTS elementosPedido CASCADE;
+
+CREATE TABLE elementosPedido (
     fk_nro_producto INT,
     fk_nro_pedido INT,
     precio money NOT NULL,
@@ -199,6 +208,8 @@ CREATE TABLE IF NOT EXISTS elementosPedido (
 -- Tabla proveedor
 -------------------------------------------------------
 
+DROP TABLE IF EXISTS proveedor CASCADE;
+
 CREATE TABLE proveedor (
     id_proveedor INT PRIMARY KEY,      ------  PK
     id_producto_provee INT NOT NULL
@@ -208,7 +219,9 @@ CREATE TABLE proveedor (
 -- Tabla pedidoEmpresa
 -------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS pedidoEmpresa(
+DROP TABLE IF EXISTS pedidoEmpresa CASCADE;
+
+CREATE TABLE pedidoEmpresa(
     fk_id_proveedor INT,
     fk_nro_producto_empresa INT,
     fecha_pedido_emp DATE DEFAULT CURRENT_DATE, -- uso otra función
@@ -233,12 +246,14 @@ CREATE TABLE IF NOT EXISTS pedidoEmpresa(
 -- ######################          DML              #######################
 
 --------------------------------------------------------------------------------
+-- Introduce datos según la tabla
+--------------------------------------------------------------------------------
 
--- Probando a insertar sólo los campos requeridos en clienteCRM
-
-INSERT INTO clienteCRM (id,nombre, apellidos, tfno, edad, sexo, localidad) 
-                VALUES (1,'Juan', 'Vera', '667747474', 35, 'Hombre', 'Madrid'),
-                        (2, 'Juana', 'Vez', '637747474', 'juana@hotmail.com', 25, 'Mujer', 'Madrid', 
+INSERT INTO clienteCRM (nombre, apellidos, email, tfno, edad, sexo, localidad,
+                        estado_civ, estudio, ocupacion, hobby, familia_numerosa) 
+                VALUES ('Juan', 'Vera', 'juan@hotmail.com', '667747474', 35, 'Hombre', 'Madrid',
+                        'soltero/-a','química', 'camarero', 'comida', true),
+                        ('Juana', 'Vez', '637747474', 'juana@hotmail.com', 25, 'Mujer', 'Madrid', 
                         'soltero/-a','filóloga', 'traductora', 'mascotas', false),
                         ('Sebas', 'Toledo', '627337224', 'sebas@hotmail.com', 45, 'Hombre', 'Málaga',
                          'casado/-a','manager', 'director hotel', 'idiomas', true),
@@ -270,11 +285,11 @@ INSERT INTO empleadoRRHH (nombre, apellidos, tfno, email, edad, sexo, localidad,
 
 
 INSERT INTO pedidocliente (tipo_p, modo_pago, coste_pedido, fk_nro_socio, fk_nro_empleado) 
-                    VALUES ('online', 'online', 138.50, 4, 3),
-                            ('online', 'online', 338.50, 4, 2),
-                            ('online', 'online', 38.50, 2, 2),
+                    VALUES ('online', 'online', 138.50, 6, 3),
+                            ('online', 'online', 338.50, 4, 4),
+                            ('online', 'online', 38.50, 3, 1),
                             ('personal', 'personal', 58.50, 2, 3),
-                            ('online', 'personal', 38.50, 2, 3);
+                            ('online', 'personal', 38.50, 1, 1);
 
 
 INSERT INTO almacenProductos (id_producto, cantidad_prod, fecha_caducidad) 
