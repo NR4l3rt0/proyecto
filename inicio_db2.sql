@@ -5,10 +5,15 @@
 
 --CREATE DATABASE proyecto;
 
+-- Creando 'por defectos' -> 
+-- docker run --name postgresDB -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=proyecto -d postgres
+
 
 -------------------------------------------------------
 -- Creación de tipos ENUM:
 -------------------------------------------------------
+
+
 
 CREATE TYPE estado_civil AS ENUM ('casado/-a', 'soltero/-a', 'N/A');
 CREATE TYPE jornada_trabajo AS ENUM ('completa', 'parcial', 'flexible');
@@ -54,12 +59,12 @@ DROP TABLE IF EXISTS clienteCRM CASCADE;
 
 CREATE TABLE clienteCRM(
 
-    nro_socio INT GENERATED ALWAYS AS IDENTITY,
+    id_nro_socio INT GENERATED ALWAYS AS IDENTITY,
     fecha_alta TIMESTAMPTZ DEFAULT Now(),
     fecha_baja TIMESTAMPTZ,
     encuesta_hecha BOOLEAN,
 
-    PRIMARY KEY (nro_socio) 
+    PRIMARY KEY (id_nro_socio) 
 ) INHERITS (persona);
 
 ALTER TABLE clienteCRM 
@@ -82,7 +87,7 @@ ALTER TABLE clienteCRM
 
 
 ALTER TABLE clienteCRM 
-    RENAME CONSTRAINT clientecrm_pkey TO pk_nro_socio;
+    RENAME CONSTRAINT clientecrm_pkey TO pk_id_nro_socio;
 
 
 
@@ -93,14 +98,14 @@ ALTER TABLE clienteCRM
 DROP TABLE IF EXISTS empleadoRRHH CASCADE;
 
 CREATE TABLE empleadoRRHH(
-    nro_empleado INT GENERATED ALWAYS AS IDENTITY,
+    id_nro_empleado INT GENERATED ALWAYS AS IDENTITY,
     dni_empl VARCHAR(15) NOT NULL,
     tipo_empl tipo_empleado NOT NULL,           -- uso ENUMS
     jornada_trab jornada_trabajo NOT NULL,
     salario money NOT NULL,
 
-    CONSTRAINT pk_nro_empleado 
-        PRIMARY KEY (nro_empleado)
+    CONSTRAINT pk_id_nro_empleado 
+        PRIMARY KEY (id_nro_empleado)
 
 ) INHERITS (persona);
 
@@ -129,32 +134,32 @@ ALTER TABLE empleadoRRHH
 DROP TABLE IF EXISTS pedidoCliente CASCADE;
 
 CREATE TABLE pedidoCliente(
-    nro_pedido INT GENERATED ALWAYS AS IDENTITY,
+    id_nro_pedido INT GENERATED ALWAYS AS IDENTITY,
     estado_p estado_pedido DEFAULT 'solicitado',
     tipo_p tipo_pedido NOT NULL,
     modo_pago opcion_pago NOT NULL,
     coste_pedido money NOT NULL,
     fecha_pedido TIMESTAMPTZ DEFAULT NOW(),
     fecha_entrega TIMESTAMPTZ,
-    fk_nro_socio INT,
-    fk_nro_empleado INT,
+    fk_id_nro_socio INT,
+    fk_id_nro_empleado INT,
 
-    CONSTRAINT pk_nro_pedido 
-        PRIMARY KEY (nro_pedido),
-    CONSTRAINT fk_nro_socio 
-        FOREIGN KEY (fk_nro_socio) 
-            REFERENCES clienteCRM(nro_socio),
-    CONSTRAINT fk_nro_empleado 
-        FOREIGN KEY (fk_nro_empleado) 
-            REFERENCES empleadoRRHH(nro_empleado)
+    CONSTRAINT pk_id_nro_pedido 
+        PRIMARY KEY (id_nro_pedido),
+    CONSTRAINT fk_id_nro_socio 
+        FOREIGN KEY (fk_id_nro_socio) 
+            REFERENCES clienteCRM(id_nro_socio),
+    CONSTRAINT fk_id_nro_empleado 
+        FOREIGN KEY (fk_id_nro_empleado) 
+            REFERENCES empleadoRRHH(id_nro_empleado)
                 ON DELETE SET NULL
                 -- Se considera la problemática referencial
 );
 
 ALTER TABLE pedidocliente
-    ALTER COLUMN fk_nro_socio 
+    ALTER COLUMN fk_id_nro_socio 
         SET NOT NULL,
-    ALTER COLUMN fk_nro_empleado 
+    ALTER COLUMN fk_id_nro_empleado 
         SET NOT NULL;
 
 
@@ -165,15 +170,15 @@ ALTER TABLE pedidocliente
 DROP TABLE IF EXISTS almacenProductos CASCADE;
 
 CREATE TABLE almacenProductos(
-    nro_producto INT GENERATED ALWAYS AS IDENTITY,
+    id_nro_producto INT GENERATED ALWAYS AS IDENTITY,   -- id interno
     id_producto INT NOT NULL,
     categoria_prod VARCHAR(10),
     cantidad_prod SMALLINT NOT NULL             -- se considera para dar avisos
                     CHECK (cantidad_prod > 0),  -- Check para no pedir más de existencias
     fecha_caducidad DATE NOT NULL,              -- se considera para dar avisos
 
-    CONSTRAINT pk_nro_producto 
-        PRIMARY KEY (nro_producto)
+    CONSTRAINT pk_id_nro_producto 
+        PRIMARY KEY (id_nro_producto)
 );
 
 
@@ -189,18 +194,18 @@ CREATE TABLE almacenProductos(
 DROP TABLE IF EXISTS elementosPedido CASCADE;
 
 CREATE TABLE elementosPedido (
-    fk_nro_producto INT,
-    fk_nro_pedido INT,
+    fk_id_nro_producto INT,
+    fk_id_nro_pedido INT,
     precio money NOT NULL,
 
     CONSTRAINT pk_productos_pedido 
-        PRIMARY KEY (fk_nro_producto,fk_nro_pedido),
-    CONSTRAINT fk_nro_producto 
-        FOREIGN KEY (fk_nro_producto) 
-            REFERENCES almacenProductos(nro_producto),
-    CONSTRAINT fk_nro_pedido 
-        FOREIGN KEY (fk_nro_pedido) 
-            REFERENCES pedidoCliente(nro_pedido)
+        PRIMARY KEY (fk_id_nro_producto,fk_id_nro_pedido),
+    CONSTRAINT fk_id_nro_producto 
+        FOREIGN KEY (fk_id_nro_producto) 
+            REFERENCES almacenProductos(id_nro_producto),
+    CONSTRAINT fk_id_nro_pedido 
+        FOREIGN KEY (fk_id_nro_pedido) 
+            REFERENCES pedidoCliente(id_nro_pedido)
 );
 
 
@@ -223,19 +228,19 @@ DROP TABLE IF EXISTS pedidoEmpresa CASCADE;
 
 CREATE TABLE pedidoEmpresa(
     fk_id_proveedor INT,
-    fk_nro_producto_empresa INT,
+    fk_id_nro_producto_empresa INT,
     fecha_pedido_emp DATE DEFAULT CURRENT_DATE, -- uso otra función
     fecha_entrega DATE,
-    nro_factura INT,
+    id_nro_factura INT,
 
-    CONSTRAINT pk_nro_factura 
-        PRIMARY KEY(nro_factura),
+    CONSTRAINT pk_id_nro_factura 
+        PRIMARY KEY(id_nro_factura),
     CONSTRAINT fk_id_proveedor 
         FOREIGN KEY (fk_id_proveedor) 
             REFERENCES proveedor(id_proveedor),
-    CONSTRAINT fk_nro_producto_emp 
-        FOREIGN KEY (fk_nro_producto_empresa) 
-            REFERENCES almacenProductos(nro_producto)
+    CONSTRAINT fk_id_nro_producto_emp 
+        FOREIGN KEY (fk_id_nro_producto_empresa) 
+            REFERENCES almacenProductos(id_nro_producto)
 );
 
 
@@ -253,17 +258,17 @@ INSERT INTO clienteCRM (nombre, apellidos, email, tfno, edad, sexo, localidad,
                         estado_civ, estudio, ocupacion, hobby, familia_numerosa) 
                 VALUES ('Juan', 'Vera', 'juan@hotmail.com', '667747474', 35, 'Hombre', 'Madrid',
                         'soltero/-a','química', 'camarero', 'comida', true),
-                        ('Juana', 'Vez', '637747474', 'juana@hotmail.com', 25, 'Mujer', 'Madrid', 
+                        ('Juana', 'Vez', 'juana@hotmail.com','637747474',  25, 'Mujer', 'Madrid', 
                         'soltero/-a','filóloga', 'traductora', 'mascotas', false),
-                        ('Sebas', 'Toledo', '627337224', 'sebas@hotmail.com', 45, 'Hombre', 'Málaga',
+                        ('Sebas', 'Toledo', 'sebas@hotmail.com', '627337224', 45, 'Hombre', 'Málaga',
                          'casado/-a','manager', 'director hotel', 'idiomas', true),
-                         ('Loli', 'Paz', '611337794', 'loli@hotmail.com', 37, 'Mujer', 'Málaga',
+                         ('Loli', 'Paz', 'loli@hotmail.com', '611337794',  37, 'Mujer', 'Málaga',
                          'soltero/-a','marketing', 'empresaria', 'cultura', true),
-                         ('Pedro', 'Núñez', '688886624', 'pedro@hotmail.com', 25, 'Hombre', 'Sevilla',
+                         ('Pedro', 'Núñez','pedro@hotmail.com', '688886624',  25, 'Hombre', 'Sevilla',
                          'casado/-a','manager', 'director hotel', 'idiomas', true),
-                         ('Petra', 'Willis', '627337004', 'petra.willis@hotmail.com', 45, 'Mujer', 'Alicante',
+                         ('Petra', 'Willis','petra.willis@hotmail.com', '627337004',  45, 'Mujer', 'Alicante',
                          'casado/-a','manager', 'director hotel', 'idiomas', false),
-                         ('Miguel', 'Cervantes', '627337211', 'cervantes@hotmail.com', 45, 'Hombre', 'Bilbao',
+                         ('Miguel', 'Cervantes','cervantes@hotmail.com', '627337211',  45, 'Hombre', 'Bilbao',
                          'casado/-a','derecho', 'bibliotecario', 'dibujar', true);
 
 
@@ -284,7 +289,7 @@ INSERT INTO empleadoRRHH (nombre, apellidos, tfno, email, edad, sexo, localidad,
                          '5123478y', 'sop. técnico', 'parcial', 19500);
 
 
-INSERT INTO pedidocliente (tipo_p, modo_pago, coste_pedido, fk_nro_socio, fk_nro_empleado) 
+INSERT INTO pedidocliente (tipo_p, modo_pago, coste_pedido, fk_id_nro_socio, fk_id_nro_empleado) 
                     VALUES ('online', 'online', 138.50, 6, 3),
                             ('online', 'online', 338.50, 4, 4),
                             ('online', 'online', 38.50, 3, 1),
