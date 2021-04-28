@@ -69,12 +69,12 @@ CREATE TABLE clienteCRM(
 
 ALTER TABLE clienteCRM 
     ALTER COLUMN encuesta_hecha SET DEFAULT FALSE,
-    ALTER COLUMN edad SET NOT NULL,
-    ALTER COLUMN tfno SET NOT NULL,
+    ALTER COLUMN edad,
+    ALTER COLUMN tfno,
     ALTER COLUMN nombre SET NOT NULL,
-    ALTER COLUMN apellidos SET NOT NULL,
-    ALTER COLUMN localidad SET NOT NULL,
-    ALTER COLUMN  sexo SET NOT NULL;
+    ALTER COLUMN apellidos,
+    ALTER COLUMN localidad,
+    ALTER COLUMN  sexo;
 
 ALTER TABLE clienteCRM 
     ADD COLUMN comentario text;
