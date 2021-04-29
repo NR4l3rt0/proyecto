@@ -9,20 +9,58 @@
 -- docker run --name postgresDB -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=proyecto -d postgres
 
 
--------------------------------------------------------
--- Creación de tipos ENUM:
--------------------------------------------------------
 
 
 
-CREATE TYPE estado_civil AS ENUM ('casado/-a', 'soltero/-a', 'N/A');
-CREATE TYPE jornada_trabajo AS ENUM ('completa', 'parcial', 'flexible');
-CREATE TYPE tipo_pedido AS ENUM ('personal', 'online');
-CREATE TYPE tipo_empleado AS ENUM ('comercial', 'almacén', 'analista', 'manager', 'administrativo', 'sop. técnico', 'coordinador', 'transportista');
-CREATE TYPE estado_pedido AS ENUM ('solicitado', 'entregado', 'en camino', 'cancelado', 'devuelto'); 
+/*
 
--- Es igual a tipo pedido porque se considera la opción de que sea mediante terceros
-CREATE TYPE opcion_pago AS ENUM ('personal', 'online');
+-----------------------------------------------------------------------------------
+                        MODIFICACIONES EN IMPLEMENTACIÓN
+-----------------------------------------------------------------------------------
+
+1.-
+    -------------------------------------------------------
+    -- Creación de tipos ENUM:
+    --------------------------------------------------------------------------------------
+    * Se obvian finalmente para tratar de evitar problemas en el mapeo, 
+    * se creará con VARCHAR y se pretende eliminar/controlar errores desde la interfaz gráfica
+    * o desde programa backend.
+    --------------------------------------------------------------------------------------
+
+    CREATE TYPE estado_civil AS ENUM ('casado/-a', 'soltero/-a', 'N/A');
+    CREATE TYPE jornada_trabajo AS ENUM ('completa', 'parcial', 'flexible');
+    CREATE TYPE tipo_pedido AS ENUM ('personal', 'online');
+    CREATE TYPE tipo_empleado AS ENUM ('comercial', 'almacén', 'analista', 'manager', 'administrativo', 'sop. técnico', 'coordinador', 'transportista');
+    CREATE TYPE estado_pedido AS ENUM ('solicitado', 'entregado', 'en camino', 'cancelado', 'devuelto'); 
+
+        -- Es igual a tipo pedido porque se considera la opción de que sea mediante terceros
+    CREATE TYPE opcion_pago AS ENUM ('personal', 'online');
+    
+
+
+ 2.-   
+    ---------------------------------------------------------------------------
+    -- CAMBIO EN TODAS LAS FECHAS QUE USEN HORA Y VENGAN DESDE APPS DE TERCEROS
+    --------------------------------------------------------------------------------------
+    * Ej: los campos como el tipo fecha_baja TIMESTAMPTZ, se sustituye por VARCHAR(40);
+    * así, al traerla de la aplicación se pueden evitar problemas de compatibilidad de tipos 
+    * y eso ayudará también a nivel de seguridad pues se usará parecido a ZonedDateTime.now()
+    * ---------------------------------------------------------------------------------------
+    * Nota: por tanto los tipo DATE no serán afectados.
+    *
+
+3.- 
+    ---------------------------------------------------------------------------
+    -- CAMBIO EN TODAS LOS PRECIOS A NUMERIC
+    ------------------------------------------------------------------------------------------
+
+    * Según la documentación se recomienda usar el tipo numeric(precisión, escala) para 
+    * tratar el dinero, pues evita errores al tratar monedas internacionales y es más preciso
+    * que money. 
+    * Además se usará una escala de 4 según se recomienda.
+    * ----------------------------------------------------------------------------------------
+
+*/
 
 
 
@@ -44,7 +82,7 @@ CREATE TABLE IF NOT EXISTS persona(
     edad SMALLINT,
     sexo VARCHAR(10),
     localidad VARCHAR(20),
-    estado_civ estado_civil,
+    estado_civ VARCHAR(15),
     estudio VARCHAR(20),
     ocupacion VARCHAR(25),
     hobby VARCHAR(25),
@@ -61,7 +99,7 @@ CREATE TABLE clienteCRM(
 
     id_nro_socio INT GENERATED ALWAYS AS IDENTITY,
     fecha_alta TIMESTAMPTZ DEFAULT Now(),
-    fecha_baja TIMESTAMPTZ,
+    fecha_baja VARCHAR(40),    
     encuesta_hecha BOOLEAN,
 
     PRIMARY KEY (id_nro_socio) 
@@ -74,10 +112,13 @@ ALTER TABLE clienteCRM
     ALTER COLUMN nombre SET NOT NULL,
     ALTER COLUMN apellidos,
     ALTER COLUMN localidad,
-    ALTER COLUMN  sexo;
+    ALTER COLUMN sexo;
 
+
+--  Aunque se añade, no se usa en un principio 
+--  (opciones a tener en cuenta al mapear @Clob o @Column(columnDefinition=”TEXT”))
 ALTER TABLE clienteCRM 
-    ADD COLUMN comentario text;
+    ADD COLUMN comentario text; 
 
 ALTER TABLE clienteCRM 
     ADD CONSTRAINT uniq_email_cli 
@@ -100,9 +141,9 @@ DROP TABLE IF EXISTS empleadoRRHH CASCADE;
 CREATE TABLE empleadoRRHH(
     id_nro_empleado INT GENERATED ALWAYS AS IDENTITY,
     dni_empl VARCHAR(15) NOT NULL,
-    tipo_empl tipo_empleado NOT NULL,           -- uso ENUMS
-    jornada_trab jornada_trabajo NOT NULL,
-    salario money NOT NULL,
+    tipo_empl VARCHAR(15) NOT NULL,           
+    jornada_trab VARCHAR(15) NOT NULL,
+    salario NUMERIC(15,4) NOT NULL,
 
     CONSTRAINT pk_id_nro_empleado 
         PRIMARY KEY (id_nro_empleado)
@@ -135,12 +176,12 @@ DROP TABLE IF EXISTS pedidoCliente CASCADE;
 
 CREATE TABLE pedidoCliente(
     id_nro_pedido INT GENERATED ALWAYS AS IDENTITY,
-    estado_p estado_pedido DEFAULT 'solicitado',
-    tipo_p tipo_pedido NOT NULL,
-    modo_pago opcion_pago NOT NULL,
-    coste_pedido money NOT NULL,
+    estado_p VARCHAR(15) DEFAULT 'solicitado',
+    tipo_p VARCHAR(15) NOT NULL,
+    modo_pago VARCHAR(15) NOT NULL,
+    coste_pedido NUMERIC(15,4) NOT NULL,
     fecha_pedido TIMESTAMPTZ DEFAULT NOW(),
-    fecha_entrega TIMESTAMPTZ,
+    fecha_entrega VARCHAR(40),
     fk_id_nro_socio INT,
     fk_id_nro_empleado INT,
 
@@ -196,7 +237,7 @@ DROP TABLE IF EXISTS elementosPedido CASCADE;
 CREATE TABLE elementosPedido (
     fk_id_nro_producto INT,
     fk_id_nro_pedido INT,
-    precio money NOT NULL,
+    precio NUMERIC(15,4) NOT NULL,
 
     CONSTRAINT pk_productos_pedido 
         PRIMARY KEY (fk_id_nro_producto,fk_id_nro_pedido),
