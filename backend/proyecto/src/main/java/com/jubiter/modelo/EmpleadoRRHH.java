@@ -43,19 +43,20 @@ public class EmpleadoRRHH extends Persona {
 			super();
 
 		}
+		
 
 
 		public EmpleadoRRHH(String nombre, String apellidos, String tfno, String email, String sexo, String localidad,
 				String estadoCivil, String estudio, String ocupacion, String hobby, LocalDate fechaNacimiento,
 				boolean familiaNumerosa, int nroEmpleado, String dni, String tipoEmpleado, String jornadaTrabajo,
-				BigDecimal salario) {
+				int salario) {
 			super(nombre, apellidos, tfno, email, sexo, localidad, estadoCivil, estudio, ocupacion, hobby, fechaNacimiento,
 					familiaNumerosa);
 			this.nroEmpleado = nroEmpleado;
 			this.dni = dni;
 			this.tipoEmpleado = tipoEmpleado;
 			this.jornadaTrabajo = jornadaTrabajo;
-			this.salario = salario;
+			this.salario = new BigDecimal(salario);
 		}
 
 
@@ -106,6 +107,10 @@ public class EmpleadoRRHH extends Persona {
 
 		public void setSalario(BigDecimal salario) {
 			this.salario = salario;
+		}
+		
+		public void setSalario(int salario) {
+			this.salario = BigDecimal.valueOf(salario);
 		}
 
 

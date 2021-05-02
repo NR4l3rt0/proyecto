@@ -3,8 +3,9 @@ package com.jubiter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 @SpringBootTest
-class ProyectoApplicationTests {
+public class ProyectoApplicationTest {
 
 	@Test
 	void contextLoads() {

@@ -1,6 +1,7 @@
 package com.jubiter.modelo;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 
 /*
@@ -50,7 +52,6 @@ public class Persona {
 				   sexo, localidad, estadoCivil, 
 				   estudio, ocupacion, hobby;
 	
-	//tfno, email,
 	@Column(unique = true)
 	private String email;
 	
@@ -62,10 +63,30 @@ public class Persona {
 	@Column(name = "familia_numerosa")
 	private boolean familiaNumerosa;
 	
+	/**
+	 * Atributo derivado no persistido en la base de datos
+	
+	@Transient
+	private Integer edad; */
 	
 	
+
+
+
+
 	public Persona() {}
 
+	public Persona(int clienteId, String nombre, String apellidos, String email,
+			String tfno, String localidad, String fechaNacimiento, String sexo) {
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.tfno = tfno;
+		this.email = email;
+		this.sexo = sexo;
+		this.localidad = localidad;
+		this.fechaNacimiento = LocalDate.parse(fechaNacimiento);
+		
+	}
 
 
 	public Persona(String nombre, String apellidos, String tfno, String email, String sexo, String localidad,
@@ -205,15 +226,7 @@ public class Persona {
 		this.hobby = hobby;
 	}
 
-	/*
-	// Ayuda a ponerlo desde el constructor
-	public LocalDate setGetFechaNacimiento(String fechaNacimiento) {
-		this.setFechaNacimiento(fechaNacimiento);
-		return this.getFechaNacimiento();
-	}
-	*/
 	
-
 
 	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
@@ -226,6 +239,15 @@ public class Persona {
 	}
 
 
+	/**
+	 * Permite establecer la fecha en base a una cadena de texto 'YYYY-MM-DD'.
+	 * 
+	 * @param fechaNacimiento
+	 */
+	public void setFechaNacimiento(String fechaNacimiento) {
+		this.fechaNacimiento = LocalDate.parse(fechaNacimiento);
+	}
+
 
 	public boolean isFamiliaNumerosa() {
 		return familiaNumerosa;
@@ -236,6 +258,26 @@ public class Persona {
 	public void setFamiliaNumerosa(boolean familia_numerosa) {
 		this.familiaNumerosa = familia_numerosa;
 	}
+	
+	
+	//
+	
+	/**
+	 *  Este método calcula la edad de una persona en base a su fecha de nacimiento, 
+	 *  lo hace automáticamente en base a una fecha de nacimiento. 
+	 *  Es decir, es un atributo derivado.
+	 * 
+	 * @return edad de una persona.
+	 
+	public Integer getEdad() {
+		return Period.between(this.fechaNacimiento, LocalDate.now()).getYears();
+	}
+
+
+	// A priori este método no se necesita, pero por si alguien no da un fecha completa
+	public void setEdad(Integer edad) {		
+		this.edad = edad;
+	}*/
 
 
 
@@ -246,5 +288,7 @@ public class Persona {
 				+ ", ocupacion=" + ocupacion + ", hobby=" + hobby + ", edad=" + fechaNacimiento + ", familia_numerosa="
 				+ familiaNumerosa + "]";
 	}
+	
+	
 
 }

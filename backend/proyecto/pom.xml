@@ -17,7 +17,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<!--<jsonpatch.version>1.12</jsonpatch.version>-->
+		<jsonpatch.version>1.12</jsonpatch.version>
 	</properties>
 
 	<dependencies>
@@ -39,11 +39,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--<dependency>
-			  <groupId>com.github.java-json-tools</groupId>
+		<dependency>
+			<groupId>com.github.java-json-tools</groupId>
 			<artifactId>json-patch</artifactId>
 			<version>${jsonpatch.version}</version>
-		</dependency>-->
+		</dependency>
+
 	</dependencies>
 
 	<build>

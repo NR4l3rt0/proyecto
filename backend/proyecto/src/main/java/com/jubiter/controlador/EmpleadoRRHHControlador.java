@@ -1,5 +1,6 @@
 package com.jubiter.controlador;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -38,9 +40,9 @@ public class EmpleadoRRHHControlador {
 	}
 	
 	
-	@GetMapping("/empleados/{id}")
-	public EmpleadoRRHH getEmpleado(@PathVariable int id) {
-		return empleadoRRHHService.getEmpleado(id);
+	@GetMapping("/empleados/{empleadoId}")
+	public EmpleadoRRHH getEmpleado(@PathVariable int empleadoId) {
+		return empleadoRRHHService.getEmpleado(empleadoId);
 	}
 	
 	
@@ -50,22 +52,32 @@ public class EmpleadoRRHHControlador {
 	}
 	
 	
-	@PutMapping("/empleados/{id}")
-	public void updateEmpleado(@PathVariable int id, @RequestBody EmpleadoRRHH empleado) {
-		empleadoRRHHService.updateEmpleado(id, empleado);
+	@PutMapping("/empleados/{empleadoId}")
+	public void updateEmpleado(@PathVariable int empleadoId, @RequestBody EmpleadoRRHH empleado) {
+		empleadoRRHHService.updateEmpleado(empleadoId, empleado);
 	}	
 	
 	
-	@DeleteMapping("/empleados/{id}")
-	public void deleteEmpleado(@PathVariable int id) {
-		empleadoRRHHService.deleteEmpleado(id);
+	@DeleteMapping("/empleados/{empleadoId}")
+	public void deleteEmpleado(@PathVariable int empleadoId) {
+		empleadoRRHHService.deleteEmpleado(empleadoId);
 	}
 	
-	@PatchMapping("empleados/{id}")
-	public void patchEmpleado(@PathVariable int id, @RequestBody EmpleadoRRHH empleado) {
-		empleadoRRHHService.modifyEmpleado(id, empleado);
-	}
+
+	@PatchMapping(value = "/empleados/{empleadoId}",
+			  consumes = "application/json-patch+json")
+	public void modifyEmpleados(
+			    @PathVariable("empleadoId") int empleadoId,
+			  	@RequestParam(required = false) String nombre,
+			   	@RequestParam(required = false) String email,
+			  	@RequestParam(required = false) String tfno,
+			   	@RequestParam(required = false) String jornadaTrabajo,
+			   	@RequestParam(required = false) BigDecimal salario
+			) {
 		
+		empleadoRRHHService.modifyEmpleado(empleadoId, nombre, email,
+			   										tfno, jornadaTrabajo, salario);	
+	}
 }
 
 

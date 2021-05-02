@@ -1,13 +1,13 @@
 package com.jubiter.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import com.jubiter.Excepcion.IdNoEncontradoException;
 
 import com.jubiter.modelo.EmpleadoRRHH;
 import com.jubiter.repository.EmpleadoRRHHRepository;
@@ -32,26 +32,93 @@ public class EmpleadoRRHHService {
 		}
 
 		
-		public EmpleadoRRHH getEmpleado(int id){
-			return empleadoRRHHRepository.findById(id);	
+		public EmpleadoRRHH getEmpleado(int empleadoId){
+			
+			boolean existe = empleadoRRHHRepository.existsById(empleadoId);
+			
+			if(!existe) {
+				
+				throw new IllegalStateException(
+						"No existe un cliente con ID: " + empleadoId);
+			}
+	
+			
+			return empleadoRRHHRepository.findById(empleadoId);	
 		}
 		
 
+		
 		public void addEmpleado(EmpleadoRRHH empleado) {
+			
+			if(empleado.getDni().isBlank()) {
+				throw new IllegalStateException(
+						"Es necesario que el DNI esté relleno y sea válido");
+			} 
+			
 			empleadoRRHHRepository.save(empleado);
+			
 			
 		}
 
 
-		public void updateEmpleado(int id, EmpleadoRRHH empleado) {
+		public void updateEmpleado(int empleadoId, EmpleadoRRHH empleado) {
+			
+			if(empleado.getDni().isBlank()) {
+				throw new IllegalStateException(
+						"Es necesario que el DNI esté relleno y sea válido");
+			} 
+				
 			empleadoRRHHRepository.save(empleado);
-					
+			
 		}
 
 		
-		public void deleteEmpleado(int id) {
-			empleadoRRHHRepository.deleteById(id);		
+		public void deleteEmpleado(int empleadoId) {
 			
+			boolean existe = empleadoRRHHRepository.existsById(empleadoId);
+			
+			if(!existe) {
+				throw new IllegalStateException(
+						"No existe un cliente con ID: " + empleadoId);
+			}
+			empleadoRRHHRepository.deleteById(empleadoId);		
+			
+		}
+
+
+		public void modifyEmpleado(int empleadoId, String nombre, String email, 
+									String tfno, String jornadaTrabajo, BigDecimal salario) {
+			
+			EmpleadoRRHH empleado = empleadoRRHHRepository.findById(empleadoId);
+			
+			if(empleado == null) {
+				throw new IdNoEncontradoException(
+							"No se ha encontrado ninguna coincidencia con ese ID.");
+			}
+			
+
+			if (nombre != null && !nombre.equals(empleado.getNombre())){
+				empleado.setNombre(nombre);
+			}
+			
+			if (email != null && !email.equals(empleado.getEmail())){
+				empleado.setEmail(email);
+			}
+			
+			if (tfno != null && !tfno.equals(empleado.getTfno())){
+				empleado.setTfno(tfno);
+			}
+			
+			if (salario != null && salario != empleado.getSalario()){
+				empleado.setSalario(salario);
+			}
+			
+
+			if (jornadaTrabajo != null && !jornadaTrabajo.equals(empleado.getJornadaTrabajo())){
+				empleado.setJornadaTrabajo(jornadaTrabajo);
+			}
+			
+			empleadoRRHHRepository.save(empleado);
 		}
 
 
