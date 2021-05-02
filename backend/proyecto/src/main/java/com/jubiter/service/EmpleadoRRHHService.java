@@ -68,6 +68,7 @@ public class EmpleadoRRHHService {
 						"Es necesario que el DNI esté relleno y sea válido");
 			} 
 				
+
 			empleadoRRHHRepository.save(empleado);
 			
 		}
@@ -86,8 +87,8 @@ public class EmpleadoRRHHService {
 		}
 
 
-		public void modifyEmpleado(int empleadoId, String nombre, String email, 
-									String tfno, String jornadaTrabajo, BigDecimal salario) {
+		public void modifyEmpleado(int empleadoId, String nombre, String email, String tfno,
+									 String tipoEmpleado, String jornadaTrabajo, BigDecimal salario) {
 			
 			EmpleadoRRHH empleado = empleadoRRHHRepository.findById(empleadoId);
 			
@@ -111,6 +112,10 @@ public class EmpleadoRRHHService {
 			
 			if (salario != null && salario != empleado.getSalario()){
 				empleado.setSalario(salario);
+			}
+			
+			if (tipoEmpleado != null && !tipoEmpleado.equals(empleado.getTipoEmpleado())){
+				empleado.setTipoEmpleado(tipoEmpleado);
 			}
 			
 

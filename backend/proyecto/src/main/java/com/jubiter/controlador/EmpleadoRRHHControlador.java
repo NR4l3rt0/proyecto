@@ -72,11 +72,12 @@ public class EmpleadoRRHHControlador {
 			   	@RequestParam(required = false) String email,
 			  	@RequestParam(required = false) String tfno,
 			   	@RequestParam(required = false) String jornadaTrabajo,
+			   	@RequestParam(required = false) String tipoEmpleado,
 			   	@RequestParam(required = false) BigDecimal salario
 			) {
 		
-		empleadoRRHHService.modifyEmpleado(empleadoId, nombre, email,
-			   										tfno, jornadaTrabajo, salario);	
+		empleadoRRHHService.modifyEmpleado(empleadoId, nombre, email, tfno,
+			   								tipoEmpleado, jornadaTrabajo, salario);	
 	}
 }
 

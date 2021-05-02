@@ -1,0 +1,13 @@
+- Implementar HATEOAS
+- Implementar registro y seguridad (por roles), quizá LDAP
+- Implementar características con ResponseEntity para tener más información
+- Implementar CORS
+- RabbitMQ para paso mensajes ?
+- Mensaje al responsable cuando el stock esté bajo mínimos 
+- Centralizar tráfico con gateway o proxy de balance, registro/discovery, filtro
+- Actuator o terceros que permitan llevar control de las métricas (Tanzy observability)
+- Caching datos para mejorar rendimiento en cliente y rebajar carga en servidores ?
+- Automatizar con Jenkins y Kubernetes, (Ansible, Terraform... opcionales) 
+- Posibilidad deployment AWS 
+- Vista para business
+- Crear vista o método que parametrice según cliente

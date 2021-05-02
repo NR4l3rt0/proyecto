@@ -15,6 +15,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+
 
 
 /*
@@ -51,13 +55,16 @@ public class Persona {
 	private String nombre,  apellidos, 
 				   sexo, localidad, estadoCivil, 
 				   estudio, ocupacion, hobby;
-	
-	@Column(unique = true)
+
+	@NotBlank(message = "No puede ser una cadena vacía.")
+	@Email								// Se asegura que el campo esté bien formado, aunque semánticamente dependa
+	@Column(unique = true)				// de la implementación
 	private String email;
 	
 	@Column(unique = true)
 	private String tfno;
 	
+	@Past								// Restringe el valor a una fecha del pasado
 	@Column(name = "fecha_nacimiento")
 	private LocalDate fechaNacimiento;
 	@Column(name = "familia_numerosa")

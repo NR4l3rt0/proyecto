@@ -52,6 +52,7 @@ public class ClienteCRMControlador {
 	}
 	
 	
+	// Nota: si no se especifica un nroSocio en el Body, actuará como un POST
 	@PutMapping("/clientes/{clienteId}")
 	public void updateCliente(@PathVariable int clienteId, @RequestBody ClienteCRM cliente) {
 		clienteCRMService.updateCliente(clienteId, cliente);
@@ -80,12 +81,9 @@ public class ClienteCRMControlador {
 			  	@RequestParam(required = false) String tfno,
 			   	@RequestParam(required = false) String localidad,
 			   	@RequestParam(required = false) String fechaNacimiento
-			) 
-	{
+			) {
+		
 			   		clienteCRMService.modifyCliente(clienteId, nombre, email,
-			   										tfno, localidad, fechaNacimiento);
-	
-	
-	
+			   										tfno, localidad, fechaNacimiento);	
 	}		
 }

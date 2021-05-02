@@ -11,6 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 
 
@@ -19,14 +23,25 @@ import javax.persistence.Id;
 public class EmpleadoRRHH extends Persona {
 
 	
+		/*@Id
+		@GeneratedValue(strategy=GenerationType.AUTO)*/
 		@Id
-		@GeneratedValue(strategy=GenerationType.AUTO)
+		@SequenceGenerator(
+				name = "secuencia_empleado",		 						  // nombre dado en Java
+				sequenceName = "secuencia_empleado", 						  // secuencia creada BD (opcional si es = al nombre)
+				allocationSize = 1					 					      // intervalo
+				)
+		@GeneratedValue( 
+				strategy = GenerationType.SEQUENCE,	 						  // tipo del generador
+				generator = "secuencia_empleado"	 						  // nombre secuencia dado en Java
+				)
+		
 		@Column(name="id_nro_empleado", unique = true)		
 		private int nroEmpleado;
 		
-		
-		@Column(name="dni", unique = true)
-		private String dni;
+		@Size(min = 8, max = 9, message = "Debe tener entre 8 y 9 valores")   // Se da pie a que la implementación 
+		@Column(name="dni", unique = true)	  								  // use la letra o no; aunque para otro tipo
+		private String dni;												      // de documento no español deba sufrir variaciones
 		
 		@Column(name="tipo_empleado")
 		private String tipoEmpleado;
@@ -34,6 +49,7 @@ public class EmpleadoRRHH extends Persona {
 		@Column(name="jornada_trabajo")
 		private String jornadaTrabajo;
 		
+		@PositiveOrZero														  // Valida que la cantidad se >= 0
 		private BigDecimal salario;
 		
 		

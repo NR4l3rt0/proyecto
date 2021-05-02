@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -14,14 +17,28 @@ import java.util.UUID;
 @Entity(name = "cliente_crm")
 public class ClienteCRM extends Persona {
 
-	@Id
+	/*@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	*/
+	
+	@Id
+	@SequenceGenerator(
+			name = "secuencia_cliente",		 						  
+			sequenceName = "secuencia_cliente", 						 
+			allocationSize = 1					 					     
+			)
+	@GeneratedValue( 
+			strategy = GenerationType.SEQUENCE,	 						 
+			generator = "secuencia_cliente"	 						 
+			)
 	@Column(name = "id_nro_socio")
 	private int nroSocio;
 
+	@FutureOrPresent								// Valida que la fecha es igual o superior al día actual
 	@Column(name = "fecha_alta")
 	private LocalDate fechaAlta = LocalDate.now(); // Por defecto
 
+	@PastOrPresent									// fecha <= con respecto al día actual
 	@Column(name = "fecha_baja")
 	private LocalDate fechaBaja;
 
