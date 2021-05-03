@@ -41,6 +41,14 @@ public class Producto {
 	
 	public Producto() {}
 	
+	
+	public Producto(int idProducto, int cantidadProducto, double precio) {
+		this.idProducto = idProducto;
+		this.cantidadProducto = cantidadProducto;
+		setPrecio(precio);
+	}
+	
+	
 	public Producto(int idProducto, String nombre, String categoria, BigDecimal precio, String proveedor,
 			LocalDate fechaCaducidad, int cantidadProducto) {
 		super();

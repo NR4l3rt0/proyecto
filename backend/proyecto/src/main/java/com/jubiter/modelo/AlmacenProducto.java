@@ -15,11 +15,11 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "almacen_productos")
+@Table(name = "almacen_producto")
 public class AlmacenProducto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_almacen")
 	private int idAlmacen;
 	
@@ -31,7 +31,12 @@ public class AlmacenProducto {
 	@Column(name = "nombre_empresa")
 	private String nombreEmpresa;
 
-	
+	/*/@OneToMany(mappedBy = "idAlmacen", 
+			   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+						   CascadeType.DETACH, CascadeType.REFRESH 
+						  })
+	@Column(name = "pedido_cliente")
+	private List<PedidoCliente> pedidoCliente = new ArrayList<>();*/
 	
 	
 	

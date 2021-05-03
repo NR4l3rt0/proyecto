@@ -1,8 +1,11 @@
 package com.jubiter.modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 //import javax.persistence.EnumType;	Se descartó por motivos de tamaño al persistir,		
@@ -11,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
@@ -52,7 +56,12 @@ public class EmpleadoRRHH extends Persona {
 		@PositiveOrZero														  // Valida que la cantidad se >= 0
 		private BigDecimal salario;
 		
-		
+		@OneToMany(mappedBy = "nroEmpleado", 
+				   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+							   CascadeType.DETACH, CascadeType.REFRESH 
+							  })
+		@Column(name = "pedido_cliente")
+		private List<PedidoCliente> pedidoCliente = new ArrayList<>();
 		
 
 		public EmpleadoRRHH() {

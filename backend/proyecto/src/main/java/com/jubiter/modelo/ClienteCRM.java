@@ -1,16 +1,22 @@
 package com.jubiter.modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 //@DiscriminatorValue("Cliente")
@@ -47,6 +53,16 @@ public class ClienteCRM extends Persona {
 
 	@Lob // Nótese el mapeo a Text
 	private String comentario;
+	
+	
+	// Se dejan sin tomar los tipos de cascada pertenecientes al marco Hibernate,
+	// así como la eliminación permanente.
+	@OneToMany(mappedBy = "nroSocio", 									
+			   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+						   CascadeType.DETACH, CascadeType.REFRESH 
+						  })
+	@Column(name = "pedido_cliente")
+	private List<PedidoCliente> pedidoCliente = new ArrayList<>();
 	
 
 	public ClienteCRM() {
