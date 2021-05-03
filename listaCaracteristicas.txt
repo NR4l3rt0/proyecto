@@ -11,3 +11,4 @@
 - Posibilidad deployment AWS 
 - Vista para business
 - Crear vista o método que parametrice según cliente
+- Mandar una lista diaria con el estado de las existencias, objetivos comerciales, rutas, modificaciones,...
