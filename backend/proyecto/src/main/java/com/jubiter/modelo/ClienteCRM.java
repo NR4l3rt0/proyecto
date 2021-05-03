@@ -12,20 +12,22 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.PastOrPresent;
 
-import java.time.LocalDate;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-//@DiscriminatorValue("Cliente")
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "cliente_crm")
 public class ClienteCRM extends Persona {
 
-	/*@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	*/
 	
 	@Id
 	@SequenceGenerator(
@@ -65,8 +67,6 @@ public class ClienteCRM extends Persona {
 	private List<PedidoCliente> pedidoCliente = new ArrayList<>();
 	
 
-	public ClienteCRM() {
-	}
 
 	public ClienteCRM(String nombre, String apellidos, String email, String tfno, String sexo, String localidad,
 			String estadoCivil, String estudio, String ocupacion, String hobby, LocalDate fechaNacimiento,
@@ -77,63 +77,18 @@ public class ClienteCRM extends Persona {
 		this.fechaBaja = fechaBaja;
 		this.encuestaHecha = encuestaHecha;
 		this.comentario = comentario;
+		setFechaAlta();
 	}
 
 
 
-	public int getNroSocio() {
-		return nroSocio;
-	}
 
-	public void setNroSocio(int nroSocio) {
-		this.nroSocio = nroSocio;
-	}
-
-	public LocalDate getFechaAlta() {
-		return fechaAlta;
-	}
-
-	public void setFechaAlta() { // Opciones de poner fecha automáticamente
+	public void setFechaAlta() { 					// Opciones de poner fecha automáticamente
 		this.fechaAlta = LocalDate.now();
 	}
 
-	public void setFechaAlta(String fechaAlta) { // y mediante String
+	public void setFechaAlta(String fechaAlta) { 	// y mediante String
 		this.fechaAlta = LocalDate.parse(fechaAlta);
 	}
-
-	public LocalDate getFechaBaja() {
-		return fechaBaja;
-	}
-
-	public void setFechaBaja(LocalDate fechaBaja) {
-		this.fechaBaja = fechaBaja;
-	}
-
-	public boolean isEncuestaHecha() {
-		return encuestaHecha;
-	}
-
-	public void setEncuestaHecha(boolean encuestaHecha) {
-		this.encuestaHecha = encuestaHecha;
-	}
-
-	public String getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
-
-	@Override
-	public String toString() {
-		return "ClienteCRM [nroSocio=" + nroSocio + ", fechaAlta=" + fechaAlta + ", fechaBaja=" + fechaBaja
-				+ ", encuestaHecha=" + encuestaHecha + ", comentario=" + comentario + ", nombre=" + getNombre()
-				+ ", apellidos=" + getApellidos() + ", tfno=" + getTfno() + ", email=" + getEmail() + ", sexo="
-				+ getSexo() + ", localidad=" + getLocalidad() + ", estadoCivil=" + getEstadoCivil() + ", estudio="
-				+ getEstudio() + ", ocupacion=" + getOcupacion() + ", hobby=" + getHobby() + ", fechaNacimiento="
-				+ getFechaNacimiento() + ", familiaNumerosa=" + isFamiliaNumerosa();
-	}
-
 
 }

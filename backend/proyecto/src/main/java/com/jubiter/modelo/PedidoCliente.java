@@ -22,8 +22,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity
+@AllArgsConstructor
 @Table(name = "pedido_cliente")
 public class PedidoCliente {
 	
@@ -31,15 +36,11 @@ public class PedidoCliente {
 	@SequenceGenerator(
 			name = "secuencia_pedidos",		 						  
 			sequenceName = "secuencia_pedidos", 						
-			allocationSize = 1					 					    
-			)
+			allocationSize = 1 )
 	@GeneratedValue( 
 			strategy = GenerationType.SEQUENCE,	 						 
-			generator = "secuencia_pedidos"	 						 
-			)
-	/*@Column(name= "nro_pedido")
-	private long nroPedido;*/	
-	@Column(name = "pk_id_pedido", nullable = false, unique = true)
+			generator = "secuencia_pedidos")
+	@Column(name = "pk_id_pedido")
 	private UUID idPedido;
 	
 	
@@ -122,47 +123,6 @@ public class PedidoCliente {
 
 
 
-
-			
-	
-
-	public UUID getIdPedido() {
-		return idPedido;
-	}
-
-	public void setIdPedido(UUID idPedido) {
-		this.idPedido = idPedido;
-	}
-	
-
-	public String getEstadoPedido() {
-		return estadoPedido;
-	}
-
-	public void setEstadoPedido(String estadoPedido) {
-		this.estadoPedido = estadoPedido;
-	}
-
-	public String getTipoPedido() {
-		return tipoPedido;
-	}
-
-	public void setTipoPedido(String tipoPedido) {
-		this.tipoPedido = tipoPedido;
-	}
-
-	public String getFormaPago() {
-		return formaPago;
-	}
-
-	public void setFormaPago(String formaPago) {
-		this.formaPago = formaPago;
-	}
-
-	public BigDecimal getCostePedido() {
-		return costePedido;
-	}
-
 	public void setCostePedido(double costePedido) {
 		this.costePedido = BigDecimal.valueOf(costePedido);
 	}
@@ -171,80 +131,16 @@ public class PedidoCliente {
 		this.costePedido = BigDecimal.valueOf(Double.valueOf(costePedido));
 	}
 
-	public LocalDate getFechaPedido() {
-		return fechaPedido;
-	}
 
 	public void setFechaPedido(String fechaPedido) {
 		this.fechaPedido = LocalDate.parse(fechaPedido);
 	}
 
-	public LocalDate getFechaEntrega() {
-		return fechaEntrega;
-	}
 
 	public void setFechaEntrega(String fechaEntrega) {
 		this.fechaEntrega = LocalDate.parse(fechaEntrega);
 	}
 
-	public int getNroSocio() {
-		return nroSocio;
-	}
 
-	public void setNroSocio(int nroSocio) {
-		this.nroSocio = nroSocio;
-	}
-
-	public int getNroEmpleado() {
-		return nroEmpleado;
-	}
-
-	public void setNroEmpleado(int nroEmpleado) {
-		this.nroEmpleado = nroEmpleado;
-	}
-
-	public int getIdAlmacen() {
-		return idAlmacen;
-	}
-
-	public void setIdAlmacen(int idAlmacen) {
-		this.idAlmacen = idAlmacen;
-	}
-	
-
-	
-	@Override
-	public String toString() {
-		return "PedidoCliente [idPedido=" + idPedido + ", estadoPedido="
-				+ estadoPedido + ", tipoPedido=" + tipoPedido + ", formaPago=" + formaPago + ", costePedido="
-				+ costePedido + ", fechaPedido=" + fechaPedido + ", fechaEntrega=" + fechaEntrega + ", nroSocio="
-				+ nroSocio + ", nroEmpleado=" + nroEmpleado + ", idAlmacen=" + idAlmacen + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idPedido == null) ? 0 : idPedido.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PedidoCliente other = (PedidoCliente) obj;
-		if (idPedido == null) {
-			if (other.idPedido != null)
-				return false;
-		} else if (!idPedido.equals(other.idPedido))
-			return false;
-		return true;
-	}
-    
     
 }

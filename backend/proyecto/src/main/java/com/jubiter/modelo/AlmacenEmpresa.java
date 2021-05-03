@@ -19,7 +19,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data				// Se usa Lombok
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "almacen_empresa")
 public class AlmacenEmpresa {
@@ -51,96 +57,5 @@ public class AlmacenEmpresa {
 	@Column(name = "producto_by_id_list")
 	private List<Producto> productoById = new ArrayList<>();
 	
-
-	
-
-	
-	/* Se considera esta relación porque uno o varios almacenes servirán muchos pedidos, 
-	 * y un pedido podrá estar servido por muchos almacenes. 
-	 * A su vez sirve para tomar la relación con los productos, un pedido tendrá muchos elementos,
-	 * y un elemento podrá estar en muchos pedidos.  
-	 * Por tanto, estaría tratando de materializar una doble relación entre estas dos entidades.
-	 *
-	 * Aquí se materializa la relación pedido-productos. (No tiene tanto importancia el almacén)
-	 */
-	/*@ManyToMany
-	@Column(name = "elementos_pedido")
-	private List<Producto> elementosPedido = new LinkedList<>();		
-	*/
-	
-	
-	
-
-	
-	
-	
-	/*
-	@Column(name = "pedido_cliente")
-	private UUID 
-*/
-	/*/@OneToMany(mappedBy = "idAlmacen", 
-			   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-						   CascadeType.DETACH, CascadeType.REFRESH 
-						  })
-	@Column(name = "pedido_cliente")
-	private List<PedidoCliente> pedidoCliente = new ArrayList<>();*/
-	
-	
-	
-	public AlmacenEmpresa() {}
-
-
-
-
-
-	public AlmacenEmpresa(int idAlmacen, List<Producto> productoById, String nombreEmpresa) {
-		super();
-		this.idAlmacen = idAlmacen;
-		this.productoById = productoById;
-		this.nombreEmpresa = nombreEmpresa;
-	}
-
-
-
-
-	public int getIdAlmacen() {
-		return idAlmacen;
-	}
-
-
-	public void setIdAlmacen(int idAlmacen) {
-		this.idAlmacen = idAlmacen;
-	}
-
-
-	public List<Producto> getProductoById() {
-		return productoById;
-	}
-
-
-	public void setProductoById(List<Producto> productoById) {
-		this.productoById = productoById;
-	}
-
-
-	public String getNombreEmpresa() {
-		return nombreEmpresa;
-	}
-
-
-	public void setNombreEmpresa(String nombreEmpresa) {
-		this.nombreEmpresa = nombreEmpresa;
-	}
-
-	
-
-	@Override
-	public String toString() {
-		return "AlmacenProductos [idAlmacen=" + idAlmacen + ", productoById=" + productoById
-				+ ", nombreEmpresa=" + nombreEmpresa + "]";
-	}
-
-
-	
-	
 }
+	

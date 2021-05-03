@@ -20,9 +20,20 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 
-
+@ToString
+@EqualsAndHashCode
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Entity(name = "empleado_rrhh")
 public class EmpleadoRRHH extends Persona {
 
@@ -31,25 +42,29 @@ public class EmpleadoRRHH extends Persona {
 		@SequenceGenerator(
 				name = "secuencia_empleado",		 						  // nombre dado en Java
 				sequenceName = "secuencia_empleado", 						  // secuencia creada BD (opcional si es = al nombre)
-				allocationSize = 1					 					      // intervalo
-				)
+				allocationSize = 1 )				 					      // intervalo
+				
 		@GeneratedValue( 
 				strategy = GenerationType.SEQUENCE,	 						  // tipo del generador
-				generator = "secuencia_empleado"	 						  // nombre secuencia dado en Java
-				)
+				generator = "secuencia_empleado" )	 						  // nombre secuencia dado en Java	
+		@Getter @Setter
 		@Column(name="pk_id_nro_empleado")		
 		private int nroEmpleado;
 		
+		@Getter @Setter
 		@Size(min = 8, max = 9, message = "Debe tener entre 8 y 9 valores")   // Se da pie a que la implementación 
 		@Column(name="dni", unique = true)	  								  // use la letra o no; aunque para otro tipo
 		private String dni;												      // de documento no español deba sufrir variaciones
 		
+		@Getter @Setter
 		@Column(name="tipo_empleado")
 		private String tipoEmpleado;
 		
+		@Getter @Setter
 		@Column(name="jornada_trabajo")
 		private String jornadaTrabajo;
 		
+		@Getter
 		@PositiveOrZero														  // Valida que la cantidad se >= 0
 		private BigDecimal salario;
 		
@@ -57,97 +72,34 @@ public class EmpleadoRRHH extends Persona {
 				   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 							   CascadeType.DETACH, CascadeType.REFRESH 
 							  })
+		@Getter @Setter
 		@Column(name = "pedido_cliente_list")		// esto parece que no sirve para nada
 		private List<PedidoCliente> pedidoCliente = new ArrayList<>();
-		
-
-		public EmpleadoRRHH() {
-			super();
-
-		}
 		
 
 
 		public EmpleadoRRHH(String nombre, String apellidos, String tfno, String email, String sexo, String localidad,
 				String estadoCivil, String estudio, String ocupacion, String hobby, LocalDate fechaNacimiento,
 				boolean familiaNumerosa, int nroEmpleado, String dni, String tipoEmpleado, String jornadaTrabajo,
-				int salario) {
+				double salario) {
 			super(nombre, apellidos, tfno, email, sexo, localidad, estadoCivil, estudio, ocupacion, hobby, fechaNacimiento,
 					familiaNumerosa);
 			this.nroEmpleado = nroEmpleado;
 			this.dni = dni;
 			this.tipoEmpleado = tipoEmpleado;
 			this.jornadaTrabajo = jornadaTrabajo;
-			this.salario = new BigDecimal(salario);
+			setSalario(salario);
+			
 		}
 
 
-		public int getNroEmpleado() {
-			return nroEmpleado;
+		public void setSalario(double salario) {
+			this.salario = BigDecimal.valueOf(salario);
 		}
-
-
-		public void setNroEmpleado(int nroEmpleado) {
-			this.nroEmpleado = nroEmpleado;
-		}
-
-
-		public String getDni() {
-			return dni;
-		}
-
-
-		public void setDni(String dni) {
-			this.dni = dni;
-		}
-
-
-		public String getTipoEmpleado() {
-			return tipoEmpleado;
-		}
-
-
-		public void setTipoEmpleado(String tipoEmpleado) {
-			this.tipoEmpleado = tipoEmpleado;
-		}
-
-
-		public String getJornadaTrabajo() {
-			return jornadaTrabajo;
-		}
-
-
-		public void setJornadaTrabajo(String jornadaTrabajo) {
-			this.jornadaTrabajo = jornadaTrabajo;
-		}
-
-
-		public BigDecimal getSalario() {
-			return salario;
-		}
-
 
 		public void setSalario(BigDecimal salario) {
 			this.salario = salario;
 		}
 		
-		public void setSalario(int salario) {
-			this.salario = BigDecimal.valueOf(salario);
-		}
 
-
-		@Override
-		public String toString() {
-			return "EmpleadoRRHH [nroEmpleado=" + nroEmpleado + ", dni=" + dni + ", tipoEmpleado=" + tipoEmpleado
-					+ ", jornadaTrabajo=" + jornadaTrabajo + ", salario=" + salario + ", nombre=" + getNombre() 
-					+ ", apellidos=" + getApellidos() + ", tfno=" + getTfno() + ", email=" + getEmail() 
-					+ ", sexo=" + getSexo() + ", localidad=" + getLocalidad() + ", estadoCivil= "
-					+ getEstadoCivil() + ", estudio=" + getEstudio() + ", ocupacion=" + getOcupacion() 
-					+ ", hobby=" + getHobby() + ", fechaNacimiento=" + getFechaNacimiento() 
-					+ ", familiaNumerosa= " + isFamiliaNumerosa();
-		}
-		
-		
-		
-		
 }
