@@ -27,8 +27,6 @@ import javax.validation.constraints.Size;
 public class EmpleadoRRHH extends Persona {
 
 	
-		/*@Id
-		@GeneratedValue(strategy=GenerationType.AUTO)*/
 		@Id
 		@SequenceGenerator(
 				name = "secuencia_empleado",		 						  // nombre dado en Java
@@ -39,8 +37,7 @@ public class EmpleadoRRHH extends Persona {
 				strategy = GenerationType.SEQUENCE,	 						  // tipo del generador
 				generator = "secuencia_empleado"	 						  // nombre secuencia dado en Java
 				)
-		
-		@Column(name="id_nro_empleado", unique = true)		
+		@Column(name="pk_id_nro_empleado")		
 		private int nroEmpleado;
 		
 		@Size(min = 8, max = 9, message = "Debe tener entre 8 y 9 valores")   // Se da pie a que la implementación 
@@ -60,7 +57,7 @@ public class EmpleadoRRHH extends Persona {
 				   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 							   CascadeType.DETACH, CascadeType.REFRESH 
 							  })
-		@Column(name = "pedido_cliente")
+		@Column(name = "pedido_cliente_list")		// esto parece que no sirve para nada
 		private List<PedidoCliente> pedidoCliente = new ArrayList<>();
 		
 

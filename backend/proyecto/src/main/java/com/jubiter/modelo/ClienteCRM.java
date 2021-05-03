@@ -37,7 +37,7 @@ public class ClienteCRM extends Persona {
 			strategy = GenerationType.SEQUENCE,	 						 
 			generator = "secuencia_cliente"	 						 
 			)
-	@Column(name = "id_nro_socio")
+	@Column(name = "pk_id_nro_socio")
 	private int nroSocio;
 
 	@FutureOrPresent								// Valida que la fecha es igual o superior al día actual
@@ -61,7 +61,7 @@ public class ClienteCRM extends Persona {
 			   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 						   CascadeType.DETACH, CascadeType.REFRESH 
 						  })
-	@Column(name = "pedido_cliente")
+	@Column(name = "pedido_cliente_list")
 	private List<PedidoCliente> pedidoCliente = new ArrayList<>();
 	
 

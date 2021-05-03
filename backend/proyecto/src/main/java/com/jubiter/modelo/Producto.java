@@ -1,28 +1,50 @@
 package com.jubiter.modelo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.PositiveOrZero;
 
 
 
 
 @Entity
+@IdClass (ProductoCompuestaPK.class)
 public class Producto {
-	
+
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_producto")
+	@SequenceGenerator(
+			name = "secuencia_producto",		 						  
+			sequenceName = "secuencia_producto", 						
+			allocationSize = 1					 					    
+			)
+	@GeneratedValue( 
+			strategy = GenerationType.SEQUENCE,	 						 
+			generator = "secuencia_producto"	 						 
+			)
+	@ManyToOne(targetEntity = AlmacenEmpresa.class,
+			   cascade = { CascadeType.PERSIST, CascadeType.MERGE, 
+					       CascadeType.DETACH, CascadeType.REFRESH },
+			   fetch = FetchType.LAZY)
+	@JoinColumn(name = "fkc_id_producto")        // Relación con tabla AlmacenEmpresa
 	private int idProducto;
+	
 	private String nombre;
 	private String categoria;
 	
@@ -36,6 +58,20 @@ public class Producto {
 	@Column(name = "cantidad_producto")
 	private int cantidadProducto;
 	
+	@Id
+	@ManyToOne(targetEntity = PedidoCliente.class,
+			   cascade = { CascadeType.PERSIST, CascadeType.MERGE, 
+			   			  CascadeType.DETACH, CascadeType.REFRESH },
+			   fetch = FetchType.LAZY)
+	@JoinColumn(name = "fkc_id_pedido")			// Relación con tabla PedidoCliente
+	private PedidoCliente pedidoCliente;
+	
+	/*
+	public void pedidosServidos(PedidoCliente pedido) {
+		elementosPedido.add(pedido);
+	}
+	
+	*/
 	
 	
 	

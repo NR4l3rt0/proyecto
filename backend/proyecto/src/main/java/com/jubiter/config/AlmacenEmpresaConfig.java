@@ -8,21 +8,21 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.jubiter.modelo.AlmacenProducto;
+import com.jubiter.modelo.AlmacenEmpresa;
 import com.jubiter.modelo.Producto;
-import com.jubiter.repository.AlmacenProductosRepository;
+import com.jubiter.repository.AlmacenEmpresaRepository;
 
 
 
 @Configuration
-public class AlmacenProductosConfig {
+public class AlmacenEmpresaConfig {
 
 	    @Bean
-	    CommandLineRunner commandLineRunnerAlmacenProducto (AlmacenProductosRepository almacenProductosRepository) {
+	    CommandLineRunner commandLineRunnerAlmacenEmpresa (AlmacenEmpresaRepository almacenEmpresaRepository) {
 	    	
 
     return args -> { 
-    		
+    		/*
     	List <Producto> productos = List.of(
     	    	new Producto(1, "pechuga pavo", "cocido", BigDecimal.valueOf(10.95),
     	    			"Frial", LocalDate.parse("2021-08-01"), 100),
@@ -43,7 +43,7 @@ public class AlmacenProductosConfig {
 
 				);
     	
-    		almacenProductosRepository.save(new AlmacenProducto(1, productos, "Jubiter S.L."));
+    	almacenEmpresaRepository.save(new AlmacenEmpresa(1, productos, "Jubiter S.L."));*/
     	};
     }
 }

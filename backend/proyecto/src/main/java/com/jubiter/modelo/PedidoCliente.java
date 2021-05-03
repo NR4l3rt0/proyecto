@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -16,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -23,17 +27,21 @@ import javax.persistence.Table;
 @Table(name = "pedido_cliente")
 public class PedidoCliente {
 	
-	/*@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name= "nro_pedido")
-	private long nroPedido;*/
-	
 	@Id
-	@Column(name = "id_pedido")
+	@SequenceGenerator(
+			name = "secuencia_pedidos",		 						  
+			sequenceName = "secuencia_pedidos", 						
+			allocationSize = 1					 					    
+			)
+	@GeneratedValue( 
+			strategy = GenerationType.SEQUENCE,	 						 
+			generator = "secuencia_pedidos"	 						 
+			)
+	/*@Column(name= "nro_pedido")
+	private long nroPedido;*/	
+	@Column(name = "pk_id_pedido", nullable = false, unique = true)
 	private UUID idPedido;
 	
-	@Column(name = "elementos_pedido")
-	private List<Producto> elementosPedido = new ArrayList<>();		// Se elige esta estructura por la posibilidad de modificaciones
 	
 	@Column(name = "estado_pedido")
 	private String estadoPedido;
@@ -55,23 +63,37 @@ public class PedidoCliente {
 	
 	
     @ManyToOne(targetEntity = ClienteCRM.class, 
-    		   cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "id_nro_socio")
+    		   cascade = { CascadeType.PERSIST, CascadeType.MERGE, 
+    				   	   CascadeType.DETACH, CascadeType.REFRESH })
+    @JoinColumn(name = "fk_id_nro_socio")
 	private int nroSocio; 
 	
     
     @ManyToOne(targetEntity = EmpleadoRRHH.class, 
-    		   cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "id_nro_empleado")
+    		   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+    				   	   CascadeType.DETACH, CascadeType.REFRESH })
+    @JoinColumn(name = "fk_id_nro_empleado")
 	private int nroEmpleado;
 	
     
-   @ManyToOne(targetEntity = AlmacenProducto.class,
-		   	  cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "id_almacen")
+   @ManyToOne(targetEntity = AlmacenEmpresa.class,
+		   	  cascade = { CascadeType.PERSIST, CascadeType.MERGE, 
+		   			  	  CascadeType.DETACH, CascadeType.REFRESH })
+    @JoinColumn(name = "fk_id_almacen")
 	private int idAlmacen;		
     
-
+   
+   
+   //Relación con tabla producto, bidireccional
+   @OneToMany(mappedBy = "pedidoCliente",
+		   	  cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+				   	   	  CascadeType.DETACH, CascadeType.REFRESH 
+			  	 	    })
+   @Column(name = "elementos_pedido_set", nullable = false)
+   private Set<Producto> elementosPedido;
+   
+   
+  
    
    
     
@@ -81,11 +103,11 @@ public class PedidoCliente {
 
 
 
-	public PedidoCliente(UUID idPedido, List<Producto> elementosPedido, String estadoPedido, String tipoPedido,
+	public PedidoCliente(UUID idPedido, String estadoPedido, String tipoPedido,
 			String formaPago, double costePedido, String fechaPedido, int nroSocio, int nroEmpleado) {
 		super();
 		this.idPedido = idPedido;
-		this.elementosPedido = elementosPedido;
+
 		this.estadoPedido = estadoPedido;
 		this.tipoPedido = tipoPedido;
 		this.formaPago = formaPago;
@@ -112,16 +134,6 @@ public class PedidoCliente {
 		this.idPedido = idPedido;
 	}
 	
-
-
-	public List<Producto> getElementosPedido() {
-		return elementosPedido;
-	}
-
-	public void setElementosPedido(List<Producto> elementosPedido) {
-		this.elementosPedido = elementosPedido;
-	}
-
 
 	public String getEstadoPedido() {
 		return estadoPedido;
@@ -203,7 +215,7 @@ public class PedidoCliente {
 	
 	@Override
 	public String toString() {
-		return "PedidoCliente [idPedido=" + idPedido + ", elementosPedido=" + elementosPedido + ", estadoPedido="
+		return "PedidoCliente [idPedido=" + idPedido + ", estadoPedido="
 				+ estadoPedido + ", tipoPedido=" + tipoPedido + ", formaPago=" + formaPago + ", costePedido="
 				+ costePedido + ", fechaPedido=" + fechaPedido + ", fechaEntrega=" + fechaEntrega + ", nroSocio="
 				+ nroSocio + ", nroEmpleado=" + nroEmpleado + ", idAlmacen=" + idAlmacen + "]";

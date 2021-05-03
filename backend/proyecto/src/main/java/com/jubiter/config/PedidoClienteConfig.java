@@ -11,10 +11,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.jubiter.modelo.EmpleadoRRHH;
 import com.jubiter.modelo.PedidoCliente;
 import com.jubiter.modelo.Producto;
-import com.jubiter.repository.EmpleadoRRHHRepository;
+
 import com.jubiter.repository.PedidoClienteRepository;
 
 @Configuration
@@ -25,7 +24,7 @@ public class PedidoClienteConfig {
     CommandLineRunner commandLineRunnerPedidoCliente (PedidoClienteRepository pedidoClienteRepository) {
 
     	return args -> {
-    		
+    		/*
 
     		pedidoClienteRepository.saveAll(
 				List.of(
@@ -43,7 +42,7 @@ public class PedidoClienteConfig {
 	    							"pedido", "online", "online", 0.0, LocalDate.now().toString(), 3, 4)
 
 				)
-			);
+			);*/
     	};
     }
 	
