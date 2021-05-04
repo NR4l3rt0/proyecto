@@ -49,7 +49,7 @@ public class EmpleadoRRHH extends Persona {
 				generator = "secuencia_empleado" )	 						  // nombre secuencia dado en Java	
 		@Getter @Setter
 		@Column(name="pk_id_nro_empleado")		
-		private int nroEmpleado;
+		private Integer nroEmpleado;
 		
 		@Getter @Setter
 		@Size(min = 8, max = 9, message = "Debe tener entre 8 y 9 valores")   // Se da pie a que la implementación 
@@ -77,10 +77,13 @@ public class EmpleadoRRHH extends Persona {
 		private List<PedidoCliente> pedidoCliente = new ArrayList<>();
 		
 
+		public EmpleadoRRHH() {
+			super();
+		}
 
 		public EmpleadoRRHH(String nombre, String apellidos, String tfno, String email, String sexo, String localidad,
 				String estadoCivil, String estudio, String ocupacion, String hobby, LocalDate fechaNacimiento,
-				boolean familiaNumerosa, int nroEmpleado, String dni, String tipoEmpleado, String jornadaTrabajo,
+				boolean familiaNumerosa, Integer nroEmpleado, String dni, String tipoEmpleado, String jornadaTrabajo,
 				double salario) {
 			super(nombre, apellidos, tfno, email, sexo, localidad, estadoCivil, estudio, ocupacion, hobby, fechaNacimiento,
 					familiaNumerosa);

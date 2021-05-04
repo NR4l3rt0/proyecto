@@ -40,7 +40,7 @@ public class ClienteCRM extends Persona {
 			generator = "secuencia_cliente"	 						 
 			)
 	@Column(name = "pk_id_nro_socio")
-	private int nroSocio;
+	private Integer nroSocio;
 
 	@FutureOrPresent								// Valida que la fecha es igual o superior al día actual
 	@Column(name = "fecha_alta")
@@ -67,7 +67,11 @@ public class ClienteCRM extends Persona {
 	private List<PedidoCliente> pedidoCliente = new ArrayList<>();
 	
 
+	public ClienteCRM() {
+		super();
+	}
 
+	
 	public ClienteCRM(String nombre, String apellidos, String email, String tfno, String sexo, String localidad,
 			String estadoCivil, String estudio, String ocupacion, String hobby, LocalDate fechaNacimiento,
 			boolean familiaNumerosa, Integer nroSocio, LocalDate fechaBaja, boolean encuestaHecha, String comentario) {

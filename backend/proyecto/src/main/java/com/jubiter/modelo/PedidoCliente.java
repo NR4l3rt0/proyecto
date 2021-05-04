@@ -32,14 +32,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "pedido_cliente")
 public class PedidoCliente {
 	
-	@Id
-	@SequenceGenerator(
+	
+	/*@SequenceGenerator(
 			name = "secuencia_pedidos",		 						  
 			sequenceName = "secuencia_pedidos", 						
 			allocationSize = 1 )
 	@GeneratedValue( 
 			strategy = GenerationType.SEQUENCE,	 						 
-			generator = "secuencia_pedidos")
+			generator = "secuencia_pedidos")*/
+	@Id
+	@GeneratedValue
 	@Column(name = "pk_id_pedido")
 	private UUID idPedido;
 	
@@ -67,21 +69,21 @@ public class PedidoCliente {
     		   cascade = { CascadeType.PERSIST, CascadeType.MERGE, 
     				   	   CascadeType.DETACH, CascadeType.REFRESH })
     @JoinColumn(name = "fk_id_nro_socio")
-	private int nroSocio; 
+	private Integer nroSocio; 
 	
     
     @ManyToOne(targetEntity = EmpleadoRRHH.class, 
     		   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
     				   	   CascadeType.DETACH, CascadeType.REFRESH })
     @JoinColumn(name = "fk_id_nro_empleado")
-	private int nroEmpleado;
+	private Integer nroEmpleado;
 	
     
    @ManyToOne(targetEntity = AlmacenEmpresa.class,
 		   	  cascade = { CascadeType.PERSIST, CascadeType.MERGE, 
 		   			  	  CascadeType.DETACH, CascadeType.REFRESH })
     @JoinColumn(name = "fk_id_almacen")
-	private int idAlmacen;		
+	private Integer idAlmacen;		
     
    
    
@@ -99,13 +101,14 @@ public class PedidoCliente {
    
     
     public PedidoCliente() {
+    	super();
     	this.idAlmacen = 1;				// De momento sólo hay uno
     }
 
 
 
 	public PedidoCliente(UUID idPedido, String estadoPedido, String tipoPedido,
-			String formaPago, double costePedido, String fechaPedido, int nroSocio, int nroEmpleado) {
+			String formaPago, double costePedido, String fechaPedido, Integer nroSocio, Integer nroEmpleado) {
 		super();
 		this.idPedido = idPedido;
 
@@ -119,6 +122,21 @@ public class PedidoCliente {
 		setFechaPedido(fechaPedido);
 		setCostePedido(costePedido);
 		this.idAlmacen = 1;
+	}
+	
+	public PedidoCliente (UUID idPedido, BigDecimal costePedido, String estadoPedido,
+						LocalDate fechaEntrega, LocalDate fechaPedido, String formaPago, String tipoPedido,
+						Integer idAlmacen, Integer nroEmpleado, Integer nroSocio) {
+		this.idPedido = idPedido;
+		this.costePedido = costePedido;
+		this.estadoPedido = estadoPedido;
+		this.fechaEntrega = fechaEntrega;
+		this.fechaPedido = fechaPedido;
+		this.tipoPedido = tipoPedido;
+		this.idAlmacen = idAlmacen;
+		this.nroEmpleado = nroEmpleado;
+		this.nroSocio = nroSocio;
+
 	}
 
 

@@ -1,5 +1,6 @@
 package com.jubiter.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -28,7 +29,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "almacen_empresa")
-public class AlmacenEmpresa {
+public class AlmacenEmpresa implements Serializable {
 
 	@Id
 	@SequenceGenerator(
@@ -41,7 +42,7 @@ public class AlmacenEmpresa {
 			generator = "secuencia_almacen_empresa"	 						  
 			)
 	@Column(name = "pk_id_almacen")
-	private int idAlmacen;
+	private Integer idAlmacen;
 	
 	
 	@Column(name = "nombre_empresa")
@@ -56,6 +57,26 @@ public class AlmacenEmpresa {
 					  	 })
 	@Column(name = "producto_by_id_list")
 	private List<Producto> productoById = new ArrayList<>();
+	
+	
+	public AlmacenEmpresa() {
+		super();
+	}
+	
+	public AlmacenEmpresa(Integer idAlmacen, String nombreEmpresa) {
+		this.idAlmacen = idAlmacen;
+		this.nombreEmpresa = nombreEmpresa;
+	}
+	
+	public AlmacenEmpresa(Integer idAlmacen, List<Producto> producto, String nombreEmpresa) {
+		this.idAlmacen = idAlmacen;
+		this.nombreEmpresa = nombreEmpresa;
+	}
+	/*
+	public int idAlmacen() {
+		return this.idAlmacen;
+	}
+	*/
 	
 }
 	

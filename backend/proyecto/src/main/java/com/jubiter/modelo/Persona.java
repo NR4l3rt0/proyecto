@@ -19,6 +19,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 
 /*
@@ -43,7 +47,9 @@ import javax.validation.constraints.Past;
  
 
 
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
 public class Persona {
 	
@@ -83,7 +89,7 @@ public class Persona {
 
 	public Persona() {}
 
-	public Persona(int clienteId, String nombre, String apellidos, String email,
+	public Persona(Integer clienteId, String nombre, String apellidos, String email,
 			String tfno, String localidad, String fechaNacimiento, String sexo) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;

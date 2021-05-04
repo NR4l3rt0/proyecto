@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ProductoCompuestaPK implements Serializable{
 
 
-	//private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	/*
 	 *  IMPORTANTE: 
@@ -22,7 +22,7 @@ public class ProductoCompuestaPK implements Serializable{
 	 */
 	
 	
-	private int idProducto;
+	private Integer idProducto;
 	private PedidoCliente pedidoCliente;
 	
 

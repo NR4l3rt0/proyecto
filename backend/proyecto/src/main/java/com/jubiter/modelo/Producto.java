@@ -49,7 +49,8 @@ public class Producto {
 					       CascadeType.DETACH, CascadeType.REFRESH },
 			   fetch = FetchType.LAZY)
 	@JoinColumn(name = "fkc_id_producto")        // Relación con tabla AlmacenEmpresa
-	private int idProducto;
+	private Integer idProducto;
+	
 	
 	@Id
 	@ManyToOne(targetEntity = PedidoCliente.class,
@@ -78,14 +79,14 @@ public class Producto {
 
 	
 	
-	public Producto(int idProducto, int cantidadProducto, double precio) {
+	public Producto(Integer idProducto, int cantidadProducto, double precio) {
 		this.idProducto = idProducto;
 		this.cantidadProducto = cantidadProducto;
 		setPrecio(precio);
 	}
 	
 	
-	public Producto(int idProducto, String nombre, String categoria, BigDecimal precio, String proveedor,
+	public Producto(Integer idProducto, String nombre, String categoria, BigDecimal precio, String proveedor,
 			LocalDate fechaCaducidad, int cantidadProducto) {
 		super();
 		this.idProducto = idProducto;
