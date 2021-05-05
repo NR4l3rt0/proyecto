@@ -1,0 +1,17 @@
+Finalmente tendré una entidad almacén que está relacionado con productos
+en una relación M:N y forma una clave compuesta almacen-productos. 
+Esta entidad está formada por una CK y dos relaciones M:1 (en hibernate se
+debe separar la relación con la composición).
+Hay dos posibilidades, usando una @Idclass o @Embeddabble, finalmente usaré
+la segunda.
+Entonces, esta clase estará relacionada con pedido-clientes, con una 
+relación 1:M, en donde la CK será FK en pedido-cliente.
+Finalmente, 1 pedido pertenecerá a 1 cliente, pero éste puede tener muchos 
+pedidos. Habrá que desarrollar esa lógica.
+La clase EmpleadoRRHH se sacará de la relación, o se puede poner como 
+elemento compuesto en almacén y pedido (de ser trabajador), pero no es
+una entidad en sí misma, sino sería un departamento.
+
+Con esto se consigue separar la lógica, de las relaciones. Por tanto, 
+se trabajaría hacia una arquitectura orientada a servicios separada por
+capas.

@@ -13,33 +13,27 @@ import com.jubiter.repository.ClienteCRMRepository;
 @Configuration
 public class ClienteCRMConfig {
 
-    @Bean
+    @Bean("ClienteCRMConfig")
     CommandLineRunner commandLineRunnerClienteCRM (ClienteCRMRepository clienteCRMRepository) {
 
+    	
     	return args -> {
     		clienteCRMRepository.saveAll(
 				List.of(
-	    			new ClienteCRM("Juan", "Vera", "juan@hotmail.com", "667747474", "Hombre", "Madrid",
-	                        "soltero/-a","química", "camarero", "comida", LocalDate.parse("1987-12-29"),
-	                        true, 1, null, false, ""),
-	    			new ClienteCRM("Juana", "Vez", "juana@hotmail.com","637747474", "Mujer", "Madrid", 
-	                        "soltero/-a","filóloga", "traductora", "mascotas",LocalDate.parse("1943-12-06"),
-	                        false,  2, null, false, ""),
-	    			new ClienteCRM("Sebas", "Toledo", "sebas@hotmail.com", "627337224", "Hombre", "Málaga",
-	                         "casado/-a","manager", "director hotel", "idiomas",LocalDate.parse("2000-12-22"),
-	                         true,  3, null, false, ""),
-	    			new ClienteCRM("Loli", "Paz", "loli@hotmail.com", "611337794",   "Mujer", "Málaga",
-	                         "soltero/-a","marketing", "empresaria", "cultura",LocalDate.parse("1991-01-11"),
-	                         true,  4, null, false, ""),
-	    			new ClienteCRM("Pedro", "Núñez", "pedro@hotmail.com", "688886624",  "Hombre", "Sevilla",
-	                         "casado/-a","manager", "director hotel", "idiomas", LocalDate.parse("1970-02-11"),
-	                         true,  5, null, false, ""),
-	    			new ClienteCRM("Petra", "Willis","petra.willis@hotmail.com", "627337004", "Mujer", "Alicante",
-	                         "casado/-a","manager", "director hotel", "idiomas",LocalDate.parse("1958-12-21"), 
-	                         false,  6, null, false, ""),
-	    			new ClienteCRM("Miguel", "Cervantes", "cervantes@hotmail.com", "627337211", "Hombre", "Bilbao",
-	                         "casado/-a","derecho", "bibliotecario", "dibujar",LocalDate.parse("1993-12-16"), 
-	                         true,  7, null, false, "")
+	    			new ClienteCRM(LocalDate.now(), null, false, "", "Juan", "Vera", "667747474","juan@hotmail.com",  "Hombre", "Madrid",
+	                        "soltero/-a","química", "camarero", "comida", LocalDate.parse("1987-12-29"), false),
+	    			new ClienteCRM(LocalDate.now(), null, false, "", "Juana", "Vez", "637747474","juana@hotmail.com", "Mujer", "Madrid", 
+	                        "soltero/-a","filóloga", "traductora", "mascotas", LocalDate.parse("1943-12-06"), true),
+	    			new ClienteCRM(LocalDate.now(), null, true,   "", "Sebas", "Toledo", "627337224","sebas@hotmail.com",  "Hombre", "Málaga",
+	                         "casado/-a","manager", "director hotel", "idiomas", LocalDate.parse("2000-12-22"), false),
+	    			new ClienteCRM(LocalDate.now(),null, true,  "", "Loli", "Paz", "611337794", "loli@hotmail.com",   "Mujer", "Málaga",
+	                         "soltero/-a","marketing", "empresaria", "cultura", LocalDate.parse("1991-01-11"), false),
+	    			new ClienteCRM(LocalDate.now(), null,  true, "", "Pedro", "Núñez",  "688886624", "pedro@hotmail.com", "Hombre", "Sevilla",
+	                         "casado/-a","manager", "director hotel", "idiomas", LocalDate.parse("1970-02-11"), true),
+	    			new ClienteCRM(LocalDate.now(), null, false,  "", "Petra", "Willis", "627337004","petra.willis@hotmail.com", "Mujer", "Alicante",
+	                         "casado/-a","manager", "director hotel", "idiomas", LocalDate.parse("1958-12-21"), true),
+	    			new ClienteCRM(LocalDate.now(), null, true, "", "Miguel", "Cervantes",  "627337211", "cervantes@hotmail.com", "Hombre", "Bilbao",
+	                         "casado/-a","derecho", "bibliotecario", "dibujar", LocalDate.parse("1993-12-16"), false)
 				)
 			);
     	};

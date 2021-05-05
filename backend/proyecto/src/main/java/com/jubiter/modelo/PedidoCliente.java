@@ -2,163 +2,223 @@ package com.jubiter.modelo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
+
 @Entity
-@AllArgsConstructor
 @Table(name = "pedido_cliente")
 public class PedidoCliente {
-	
-	
-	/*@SequenceGenerator(
-			name = "secuencia_pedidos",		 						  
-			sequenceName = "secuencia_pedidos", 						
-			allocationSize = 1 )
-	@GeneratedValue( 
-			strategy = GenerationType.SEQUENCE,	 						 
-			generator = "secuencia_pedidos")*/
+
 	@Id
 	@GeneratedValue
-	@Column(name = "pk_id_pedido")
-	private UUID idPedido;
+	@Column(name = "pk_id_pedido_cliente")
+	private UUID idPedidoCliente;
 	
 	
-	@Column(name = "estado_pedido")
-	private String estadoPedido;
+	@Column(name = "estado")
+	private String estado;
 	
-	@Column(name = "tipo_pedido")
-	private String tipoPedido;
+	@Column(name = "tipo")
+	private String tipo;
 	
 	@Column(name = "forma_pago")
 	private String formaPago;
 	
-	@Column(name = "coste_pedido")
-	private BigDecimal costePedido;
+	@Column(name = "coste_total")
+	private BigDecimal costeTotal;
 	
-	@Column(name = "fecha_pedido")
-	private LocalDate fechaPedido;
+	@Column(name = "fecha_emision")
+	private LocalDate fechaEmision;
 	
 	@Column(name = "fecha_entrega")
 	private LocalDate fechaEntrega;
 	
-	
-    @ManyToOne(targetEntity = ClienteCRM.class, 
-    		   cascade = { CascadeType.PERSIST, CascadeType.MERGE, 
-    				   	   CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "fk_id_nro_socio")
-	private Integer nroSocio; 
-	
+
+    @OneToMany(mappedBy = "pedidoCliente")
+	private Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa; 
     
-    @ManyToOne(targetEntity = EmpleadoRRHH.class, 
-    		   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-    				   	   CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "fk_id_nro_empleado")
-	private Integer nroEmpleado;
+    
 	
+    @ManyToOne(targetEntity = ClienteCRM.class)
+    @JoinColumn(name = "pk_id_nro_socio")
+	private ClienteCRM clienteCRM; 
     
-   @ManyToOne(targetEntity = AlmacenEmpresa.class,
-		   	  cascade = { CascadeType.PERSIST, CascadeType.MERGE, 
-		   			  	  CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinColumn(name = "fk_id_almacen")
-	private Integer idAlmacen;		
     
-   
-   
-   //Relación con tabla producto, bidireccional
-   @OneToMany(mappedBy = "pedidoCliente",
-		   	  cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-				   	   	  CascadeType.DETACH, CascadeType.REFRESH 
-			  	 	    })
-   @Column(name = "elementos_pedido_set", nullable = false)
-   private Set<Producto> elementosPedido;
-   
-   
-  
-   
-   
     
     public PedidoCliente() {
     	super();
-    	this.idAlmacen = 1;				// De momento sólo hay uno
     }
 
 
 
-	public PedidoCliente(UUID idPedido, String estadoPedido, String tipoPedido,
-			String formaPago, double costePedido, String fechaPedido, Integer nroSocio, Integer nroEmpleado) {
+
+
+
+	public PedidoCliente(UUID idPedidoCliente, String estado, String tipo, String formaPago, BigDecimal costeTotal,
+			LocalDate fechaEmision, LocalDate fechaEntrega,
+			Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa, ClienteCRM clienteCRM) {
 		super();
-		this.idPedido = idPedido;
-
-		this.estadoPedido = estadoPedido;
-		this.tipoPedido = tipoPedido;
+		this.idPedidoCliente = idPedidoCliente;
+		this.estado = estado;
+		this.tipo = tipo;
 		this.formaPago = formaPago;
-
-		this.nroSocio = nroSocio;
-		this.nroEmpleado = nroEmpleado;
-		
-		setFechaPedido(fechaPedido);
-		setCostePedido(costePedido);
-		this.idAlmacen = 1;
-	}
-	
-	public PedidoCliente (UUID idPedido, BigDecimal costePedido, String estadoPedido,
-						LocalDate fechaEntrega, LocalDate fechaPedido, String formaPago, String tipoPedido,
-						Integer idAlmacen, Integer nroEmpleado, Integer nroSocio) {
-		this.idPedido = idPedido;
-		this.costePedido = costePedido;
-		this.estadoPedido = estadoPedido;
+		this.costeTotal = costeTotal;
+		this.fechaEmision = fechaEmision;
 		this.fechaEntrega = fechaEntrega;
-		this.fechaPedido = fechaPedido;
-		this.tipoPedido = tipoPedido;
-		this.idAlmacen = idAlmacen;
-		this.nroEmpleado = nroEmpleado;
-		this.nroSocio = nroSocio;
-
+		this.clienteProductoAlmacenEmpresa = clienteProductoAlmacenEmpresa;
+		this.clienteCRM = clienteCRM;
 	}
 
 
 
-	public void setCostePedido(double costePedido) {
-		this.costePedido = BigDecimal.valueOf(costePedido);
+
+
+
+	public UUID getIdPedidoCliente() {
+		return idPedidoCliente;
 	}
+
+
+
+	public void setIdPedidoCliente(UUID idPedidoCliente) {
+		this.idPedidoCliente = idPedidoCliente;
+	}
+
+
+
+	public String getEstado() {
+		return estado;
+	}
+
+
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+
+
+	public String getTipo() {
+		return tipo;
+	}
+
+
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+
+
+	public String getFormaPago() {
+		return formaPago;
+	}
+
+
+
+	public void setFormaPago(String formaPago) {
+		this.formaPago = formaPago;
+	}
+
+
+
+	public BigDecimal getCosteTotal() {
+		return costeTotal;
+	}
+
+
+
+	public void setCosteTotal(BigDecimal costeTotal) {
+		this.costeTotal = costeTotal;
+	}
+
+
+
+	public LocalDate getFechaEmision() {
+		return fechaEmision;
+	}
+
+
+
+	public void setFechaEmision(LocalDate fechaEmision) {
+		this.fechaEmision = fechaEmision;
+	}
+
+
+
+	public LocalDate getFechaEntrega() {
+		return fechaEntrega;
+	}
+
+
+
+	public void setFechaEntrega(LocalDate fechaEntrega) {
+		this.fechaEntrega = fechaEntrega;
+	}
+
+
+
+	public Set<ClienteProductoAlmacenEmpresa> getClienteProductoAlmacenEmpresa() {
+		return clienteProductoAlmacenEmpresa;
+	}
+
+
+
+	public void setClienteProductoAlmacenEmpresa(Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa) {
+		this.clienteProductoAlmacenEmpresa = clienteProductoAlmacenEmpresa;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "PedidoCliente [idPedidoCliente=" + idPedidoCliente + ", estado=" + estado + ", tipo=" + tipo
+				+ ", formaPago=" + formaPago + ", costeTotal=" + costeTotal + ", fechaEmision=" + fechaEmision
+				+ ", fechaEntrega=" + fechaEntrega + ", clienteProductoAlmacenEmpresa=" + clienteProductoAlmacenEmpresa
+				+ "]";
+	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idPedidoCliente == null) ? 0 : idPedidoCliente.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PedidoCliente other = (PedidoCliente) obj;
+		if (idPedidoCliente == null) {
+			if (other.idPedidoCliente != null)
+				return false;
+		} else if (!idPedidoCliente.equals(other.idPedidoCliente))
+			return false;
+		return true;
+	}
+
+    
 	
-	public void setCostePedido(String costePedido) {
-		this.costePedido = BigDecimal.valueOf(Double.valueOf(costePedido));
-	}
-
-
-	public void setFechaPedido(String fechaPedido) {
-		this.fechaPedido = LocalDate.parse(fechaPedido);
-	}
-
-
-	public void setFechaEntrega(String fechaEntrega) {
-		this.fechaEntrega = LocalDate.parse(fechaEntrega);
-	}
-
-
     
 }

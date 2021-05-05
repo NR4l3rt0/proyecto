@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import com.jubiter.modelo.EmpleadoRRHH;
 import com.jubiter.repository.EmpleadoRRHHRepository;
@@ -15,8 +16,8 @@ import com.jubiter.repository.EmpleadoRRHHRepository;
 @Configuration
 public class EmpleadoRRHHConfig {
 
-	
-    @Bean
+	@DependsOn("ClienteCRMConfig")
+    @Bean("EmpleadoRRHHConfig")
     CommandLineRunner commandLineRunnerEmpleadoRRHH (EmpleadoRRHHRepository empleadoRRHHRepository) {
 
     	return args -> {

@@ -24,32 +24,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
-/*
- * 
- * 
- * Es importante ver la estrategia que se pretende seguir, se elije que esté todo en 
- * una tabla por motivo de rapidez de acceso. Por tanto, se separan por el discriminador
- * Así,se da más flexibilidad en la inserción de datos.
- * Sin embargo, habrá que implementar las restricciones oportunas a nivel de lógica
- * en la aplicación, o desde la interfaz gráfica.
- * 
- *
- * @Entity(name ="persona")
- *
- * @DiscriminatorColumn(
- * 	name = "relacionEmpresa",
- * 	discriminatorType = DiscriminatorType.STRING
- * 	)
- * @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
- */
- 
- 
-
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 public class Persona {
 	
@@ -64,10 +38,10 @@ public class Persona {
 
 	@NotBlank(message = "No puede ser una cadena vacía.")
 	@Email								// Se asegura que el campo esté bien formado, aunque semánticamente dependa
-	@Column(unique = true)				// de la implementación
+	@Column/*(unique = true)	*/			// de la implementación
 	private String email;
 	
-	@Column(unique = true)
+	@Column/*(unique = true)*/
 	private String tfno;
 	
 	@Past								// Restringe el valor a una fecha del pasado
@@ -83,11 +57,11 @@ public class Persona {
 	private Integer edad; */
 	
 	
+	public Persona() {
+		super();
+	}
 
 
-
-
-	public Persona() {}
 
 	public Persona(Integer clienteId, String nombre, String apellidos, String email,
 			String tfno, String localidad, String fechaNacimiento, String sexo) {
@@ -120,6 +94,12 @@ public class Persona {
 	}
 
 
+	
+	
+	
+	
+	
+	
 
 	public String getNombre() {
 		return nombre;
@@ -273,25 +253,6 @@ public class Persona {
 	}
 	
 	
-	//
-	
-	/**
-	 *  Este método calcula la edad de una persona en base a su fecha de nacimiento, 
-	 *  lo hace automáticamente en base a una fecha de nacimiento. 
-	 *  Es decir, es un atributo derivado.
-	 * 
-	 * @return edad de una persona.
-	 
-	public Integer getEdad() {
-		return Period.between(this.fechaNacimiento, LocalDate.now()).getYears();
-	}
-
-
-	// A priori este método no se necesita, pero por si alguien no da un fecha completa
-	public void setEdad(Integer edad) {		
-		this.edad = edad;
-	}*/
-
 
 
 	@Override
@@ -301,6 +262,40 @@ public class Persona {
 				+ ", ocupacion=" + ocupacion + ", hobby=" + hobby + ", edad=" + fechaNacimiento + ", familia_numerosa="
 				+ familiaNumerosa + "]";
 	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
+	}
+	
+	
+	
+	
+	
 	
 	
 

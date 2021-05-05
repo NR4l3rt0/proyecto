@@ -1,82 +1,122 @@
 package com.jubiter.modelo;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
-import javax.persistence.CascadeType;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data				// Se usa Lombok
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "almacen_empresa")
-public class AlmacenEmpresa implements Serializable {
+public class AlmacenEmpresa {
 
-	@Id
-	@SequenceGenerator(
-			name = "secuencia_almacen_empresa",		 						 
-			sequenceName = "secuencia_almacen_empresa", 						  
-			allocationSize = 1					 					     
-			)
-	@GeneratedValue( 
-			strategy = GenerationType.SEQUENCE,	 						  
-			generator = "secuencia_almacen_empresa"	 						  
-			)
-	@Column(name = "pk_id_almacen")
-	private Integer idAlmacen;
-	
-	
-	@Column(name = "nombre_empresa")
-	private String nombreEmpresa;
-	
-	
-	// Una empresa trabaja con muchos productos y esos productos pertenecen a una empresa
-	// Por el propósito del ejercicio se considera un almacén centralizado (luego distribuirá a los suyos internamente)
-	@OneToMany(mappedBy = "idProducto",
-			   cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-					   	   CascadeType.DETACH, CascadeType.REFRESH 
-					  	 })
-	@Column(name = "producto_by_id_list")
-	private List<Producto> productoById = new ArrayList<>();
-	
-	
-	public AlmacenEmpresa() {
-		super();
-	}
-	
-	public AlmacenEmpresa(Integer idAlmacen, String nombreEmpresa) {
-		this.idAlmacen = idAlmacen;
-		this.nombreEmpresa = nombreEmpresa;
-	}
-	
-	public AlmacenEmpresa(Integer idAlmacen, List<Producto> producto, String nombreEmpresa) {
-		this.idAlmacen = idAlmacen;
-		this.nombreEmpresa = nombreEmpresa;
-	}
-	/*
-	public int idAlmacen() {
-		return this.idAlmacen;
-	}
-	*/
-	
+		@Id
+		@SequenceGenerator(
+				name = "secuencia_almacen_empresa",		 						 
+				sequenceName = "secuencia_almacen_empresa", 						  
+				allocationSize = 1 )
+		@GeneratedValue( 
+				strategy = GenerationType.SEQUENCE,	 						  
+				generator = "secuencia_almacen_empresa"	)
+		@JoinColumn(name = "pk_id_almacen_empresa")
+		private Integer idAlmacenEmpresa;
+		
+		
+		@Column(name = "nombre_empresa")
+		private String nombreEmpresa;
+		
+
+		@OneToMany(mappedBy = "almacenEmpresa")
+		private Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa;
+		
+		
+		public AlmacenEmpresa() {
+			super();
+		}
+
+
+		public AlmacenEmpresa(Integer idAlmacenEmpresa, String nombreEmpresa,
+				Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa) {
+			super();
+			this.idAlmacenEmpresa = idAlmacenEmpresa;
+			this.nombreEmpresa = nombreEmpresa;
+			this.clienteProductoAlmacenEmpresa = clienteProductoAlmacenEmpresa;
+		}
+
+
+		public Integer getIdAlmacenEmpresa() {
+			return idAlmacenEmpresa;
+		}
+
+
+		public void setIdAlmacenEmpresa(Integer idAlmacenEmpresa) {
+			this.idAlmacenEmpresa = idAlmacenEmpresa;
+		}
+
+
+		public String getNombreEmpresa() {
+			return nombreEmpresa;
+		}
+
+
+		public void setNombreEmpresa(String nombreEmpresa) {
+			this.nombreEmpresa = nombreEmpresa;
+		}
+
+
+		public Set<ClienteProductoAlmacenEmpresa> getClienteProductoAlmacenEmpresa() {
+			return clienteProductoAlmacenEmpresa;
+		}
+
+
+		public void setClienteProductoAlmacenEmpresa(Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa) {
+			this.clienteProductoAlmacenEmpresa = clienteProductoAlmacenEmpresa;
+		}
+
+
+		@Override
+		public String toString() {
+			return "AlmacenEmpresa [idAlmacenEmpresa=" + idAlmacenEmpresa + ", nombreEmpresa=" + nombreEmpresa
+					+ ", clienteProductoAlmacenEmpresa=" + clienteProductoAlmacenEmpresa + "]";
+		}
+
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((idAlmacenEmpresa == null) ? 0 : idAlmacenEmpresa.hashCode());
+			return result;
+		}
+
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			AlmacenEmpresa other = (AlmacenEmpresa) obj;
+			if (idAlmacenEmpresa == null) {
+				if (other.idAlmacenEmpresa != null)
+					return false;
+			} else if (!idAlmacenEmpresa.equals(other.idAlmacenEmpresa))
+				return false;
+			return true;
+		}
+		
+
+		
+		
 }
-	
