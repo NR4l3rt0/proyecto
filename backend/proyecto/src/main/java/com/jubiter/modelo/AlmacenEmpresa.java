@@ -44,6 +44,14 @@ public class AlmacenEmpresa {
 		}
 
 
+		
+		
+		public AlmacenEmpresa(String nombreEmpresa) {
+			super();
+			this.nombreEmpresa = nombreEmpresa;
+		}
+		
+		
 		public AlmacenEmpresa(Integer idAlmacenEmpresa, String nombreEmpresa,
 				Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa) {
 			super();

@@ -16,9 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.PositiveOrZero;
 
-
-
-	
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -49,7 +47,7 @@ public class Producto {
 	@PositiveOrZero						// Se puede dar el caso que sea una oferta y salga gratis (o idea relacionada)
 	private BigDecimal precio;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "producto")
 	private Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa;
 	
@@ -58,7 +56,21 @@ public class Producto {
 		super();
 	}
 
+	
+	public Producto(String nombre, String categoria, String proveedor, LocalDate fechaCaducidad,
+			int cantidad, @PositiveOrZero BigDecimal precio) {
+		super();
+		this.nombre = nombre;
+		this.categoria = categoria;
+		this.proveedor = proveedor;
+		this.fechaCaducidad = fechaCaducidad;
+		this.cantidad = cantidad;
+		this.precio = precio;
 
+	}
+	
+	
+	
 	public Producto(Integer idProducto, String nombre, String categoria, String proveedor, LocalDate fechaCaducidad,
 			int cantidad, @PositiveOrZero BigDecimal precio,
 			Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa) {
@@ -141,6 +153,10 @@ public class Producto {
 
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
+	}
+	
+	public void setPrecio(String precio) {
+		this.precio = BigDecimal.valueOf(Double.parseDouble(precio));
 	}
 
 

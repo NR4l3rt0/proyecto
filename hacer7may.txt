@@ -1,0 +1,5 @@
+- arreglar inserción relaciones. Que se actualicen al insertar o que se 
+inserten separadamente; pero que pueda existir relación única y bien definida.
+- automatizar pruebas API
+- interfaz gráfica
+

@@ -41,10 +41,23 @@ public class ClienteProductoAlmacenEmpresa {
 	}
 
 
+	public ClienteProductoAlmacenEmpresa(ClienteProductoAlmacenEmpresaCK idClienteProductoAlmacenCK) {
+		super();
+		this.idClienteProductoAlmacenCK = idClienteProductoAlmacenCK;
+	}
 
 
+	
+	
+	
+	public ClienteProductoAlmacenEmpresa(AlmacenEmpresa almacenEmpresa, Producto producto, PedidoCliente pedidoCliente) {
+		super();
+		this.almacenEmpresa = almacenEmpresa;
+		this.producto = producto;
+		this.pedidoCliente = pedidoCliente;
+	}
 
-
+	
 	public ClienteProductoAlmacenEmpresa(ClienteProductoAlmacenEmpresaCK idClienteProductoAlmacenCK,
 			AlmacenEmpresa almacenEmpresa, Producto producto, PedidoCliente pedidoCliente) {
 		super();

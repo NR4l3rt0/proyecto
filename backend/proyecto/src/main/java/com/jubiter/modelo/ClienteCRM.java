@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.PastOrPresent;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -50,6 +52,7 @@ public class ClienteCRM extends Persona {
 	
 	// Se dejan sin tomar los tipos de cascada pertenecientes al marco Hibernate,
 	// así como la eliminación permanente.
+	@JsonIgnore
 	@OneToMany(mappedBy = "clienteCRM")
 	private Set<PedidoCliente> pedidosCliente;
 

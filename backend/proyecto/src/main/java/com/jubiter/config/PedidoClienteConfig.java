@@ -1,5 +1,5 @@
 package com.jubiter.config;
-/*
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,53 +12,43 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import com.jubiter.modelo.AlmacenEmpresa;
+
 import com.jubiter.modelo.PedidoCliente;
-import com.jubiter.modelo.Producto;
-import com.jubiter.repository.AlmacenEmpresaRepository;
 import com.jubiter.repository.PedidoClienteRepository;
-import com.jubiter.repository.ProductoRepository;
 
 @Configuration
 public class PedidoClienteConfig {
 
   
-	@DependsOn({"AlmacenEmpresaConfig"})  
+	//@DependsOn({"ClienteProductoAlmacenEmpresa"})  
     @Bean("PedidoClienteConfig")
     CommandLineRunner commandLineRunnerPedidoCliente (PedidoClienteRepository pedidoClienteRepository) {
 
         return args -> { 
 /*
 	
-        	PedidoCliente p1 = new PedidoCliente(UUID.fromString("aaa99b0c-7b54-4327-b81e-2a661ffe9dbe"), BigDecimal.valueOf(0.0),
-							"pedido", LocalDate.now(), LocalDate.parse("1999-11-11"), "online", "online", 1, 1, 2);
-        	PedidoCliente p2 = new PedidoCliente(UUID.fromString("bbb99b0c-7b54-4327-b81e-2a661ffe9dbe"), BigDecimal.valueOf(20.0),
-							"pedido", LocalDate.now(), LocalDate.parse("1999-11-11"),"online", "online", 1,  2, 1);
-			PedidoCliente p3 = new PedidoCliente(UUID.fromString("ccc99b0c-7b54-4327-b81e-2a661ffe9dbe"), BigDecimal.valueOf(80.0),
-							"pedido", LocalDate.now(), LocalDate.parse("1999-11-11"),"online", "online", 1, 2, 1);
-        	PedidoCliente p4 = new PedidoCliente(UUID.fromString("ddd99b0c-7b54-4327-b81e-2a661ffe9dbe"), BigDecimal.valueOf(110.0),
-							"pedido", LocalDate.now(), LocalDate.parse("1999-11-11"),"online", "online", 1, 2, 2);
-     *  					
-        	
-        	PedidoCliente p1 = new PedidoCliente(BigDecimal.valueOf(0.0),
+        	PedidoCliente p1 = new PedidoCliente(, BigDecimal.valueOf(0.0),
 							"pedido", LocalDate.now(), LocalDate.parse("1999-11-11"), "online", "online", 1, 1, 2);
         	PedidoCliente p2 = new PedidoCliente( BigDecimal.valueOf(20.0),
 							"pedido", LocalDate.now(), LocalDate.parse("1999-11-11"),"online", "online", 1,  2, 1);
 			PedidoCliente p3 = new PedidoCliente( BigDecimal.valueOf(80.0),
 							"pedido", LocalDate.now(), LocalDate.parse("1999-11-11"),"online", "online", 1, 2, 1);
-        	PedidoCliente p4 = new PedidoCliente(BigDecimal.valueOf(110.0),
+        	PedidoCliente p4 = new PedidoCliente( BigDecimal.valueOf(110.0),
 							"pedido", LocalDate.now(), LocalDate.parse("1999-11-11"),"online", "online", 1, 2, 2);
+     */ 					
         	
-        	
-        	
-        	
-        	
+        	PedidoCliente p1 = new PedidoCliente(UUID.fromString("aaa99b0c-7b54-4327-b81e-2a661ffe9dbe"), "online", "normal", "online",BigDecimal.valueOf(0.0),
+							LocalDate.now());
+        	PedidoCliente p2 = new PedidoCliente(UUID.fromString("bbb99b0c-7b54-4327-b81e-2a661ffe9dbe"), "online", "urgente", "online",BigDecimal.valueOf(20.0),
+							LocalDate.now());
+			PedidoCliente p3 = new PedidoCliente(UUID.fromString("ccc99b0c-7b54-4327-b81e-2a661ffe9dbe"), "online", "normal", "online",BigDecimal.valueOf(80.0),
+							LocalDate.now());
+        	PedidoCliente p4 = new PedidoCliente(UUID.fromString("ddd99b0c-7b54-4327-b81e-2a661ffe9dbe"),"online", "normal", "online",BigDecimal.valueOf(110.0),
+							LocalDate.now());
         	
         	
         	pedidoClienteRepository.saveAll(List.of(p1, p2, p3, p4));
 	
     	};
-    }
-    
-    
-}*/
+    }   
+}

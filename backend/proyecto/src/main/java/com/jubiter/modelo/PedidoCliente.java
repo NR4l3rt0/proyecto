@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -28,8 +30,8 @@ public class PedidoCliente {
 	@Column(name = "estado")
 	private String estado;
 	
-	@Column(name = "tipo")
-	private String tipo;
+	@Column(name = "prioridad")
+	private String prioridad;
 	
 	@Column(name = "forma_pago")
 	private String formaPago;
@@ -43,14 +45,14 @@ public class PedidoCliente {
 	@Column(name = "fecha_entrega")
 	private LocalDate fechaEntrega;
 	
-
+	@JsonIgnore
     @OneToMany(mappedBy = "pedidoCliente")
 	private Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa; 
     
     
 	
     @ManyToOne(targetEntity = ClienteCRM.class)
-    @JoinColumn(name = "pk_id_nro_socio")
+    @JoinColumn(name = "fk_id_nro_socio")
 	private ClienteCRM clienteCRM; 
     
     
@@ -60,17 +62,38 @@ public class PedidoCliente {
     }
 
 
+	public PedidoCliente(String estado, String prioridad, String formaPago, BigDecimal costeTotal,
+			LocalDate fechaEmision) {
+		super();
+		this.estado = estado;
+		this.prioridad = prioridad;
+		this.formaPago = formaPago;
+		this.costeTotal = costeTotal;
+		this.fechaEmision = fechaEmision;
+	}
+    
+    
+    
+	public PedidoCliente(UUID idPedidoCliente, String estado, String prioridad, String formaPago, BigDecimal costeTotal,
+			LocalDate fechaEmision) {
+		super();
+		this.idPedidoCliente = idPedidoCliente;
+		this.estado = estado;
+		this.prioridad = prioridad;
+		this.formaPago = formaPago;
+		this.costeTotal = costeTotal;
+		this.fechaEmision = fechaEmision;
+	}
 
 
 
-
-	public PedidoCliente(UUID idPedidoCliente, String estado, String tipo, String formaPago, BigDecimal costeTotal,
+	public PedidoCliente(UUID idPedidoCliente, String estado, String prioridad, String formaPago, BigDecimal costeTotal,
 			LocalDate fechaEmision, LocalDate fechaEntrega,
 			Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa, ClienteCRM clienteCRM) {
 		super();
 		this.idPedidoCliente = idPedidoCliente;
 		this.estado = estado;
-		this.tipo = tipo;
+		this.prioridad = prioridad;
 		this.formaPago = formaPago;
 		this.costeTotal = costeTotal;
 		this.fechaEmision = fechaEmision;
@@ -108,14 +131,14 @@ public class PedidoCliente {
 
 
 
-	public String getTipo() {
-		return tipo;
+	public String getPrioridad() {
+		return prioridad;
 	}
 
 
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setPrioridad(String prioridad) {
+		this.prioridad = prioridad;
 	}
 
 
@@ -183,7 +206,7 @@ public class PedidoCliente {
 
 	@Override
 	public String toString() {
-		return "PedidoCliente [idPedidoCliente=" + idPedidoCliente + ", estado=" + estado + ", tipo=" + tipo
+		return "PedidoCliente [idPedidoCliente=" + idPedidoCliente + ", estado=" + estado + ", prioridad=" + prioridad
 				+ ", formaPago=" + formaPago + ", costeTotal=" + costeTotal + ", fechaEmision=" + fechaEmision
 				+ ", fechaEntrega=" + fechaEntrega + ", clienteProductoAlmacenEmpresa=" + clienteProductoAlmacenEmpresa
 				+ "]";
