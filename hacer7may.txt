@@ -2,4 +2,4 @@
 inserten separadamente; pero que pueda existir relación única y bien definida.
 - automatizar pruebas API
 - interfaz gráfica
-
+- cambiar cantidad a atributo de la relación ternaria
