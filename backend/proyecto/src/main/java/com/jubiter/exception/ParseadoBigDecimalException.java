@@ -1,4 +1,4 @@
-package com.jubiter.Excepcion;
+package com.jubiter.exception;
 
 public class ParseadoBigDecimalException extends RuntimeException{
 

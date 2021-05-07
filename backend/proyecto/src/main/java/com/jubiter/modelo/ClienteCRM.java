@@ -60,6 +60,15 @@ public class ClienteCRM extends Persona {
 	public ClienteCRM() {
 		super();
 	}
+	
+	
+
+	public ClienteCRM(Integer nroSocio) {
+		super();
+		this.nroSocio = nroSocio;
+	}
+
+
 
 	public ClienteCRM(Integer nroSocio, @FutureOrPresent LocalDate fechaAlta, @PastOrPresent LocalDate fechaBaja,
 			boolean encuestaHecha, String comentario, Set<PedidoCliente> pedidosCliente) {

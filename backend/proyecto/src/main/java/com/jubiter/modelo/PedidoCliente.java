@@ -84,7 +84,18 @@ public class PedidoCliente {
 		this.costeTotal = costeTotal;
 		this.fechaEmision = fechaEmision;
 	}
-
+	
+	public PedidoCliente(UUID idPedidoCliente, String estado, String prioridad, String formaPago, BigDecimal costeTotal,
+			LocalDate fechaEmision, ClienteCRM clienteCRM) {
+		super();
+		this.idPedidoCliente = idPedidoCliente;
+		this.estado = estado;
+		this.prioridad = prioridad;
+		this.formaPago = formaPago;
+		this.costeTotal = costeTotal;
+		this.fechaEmision = fechaEmision;
+		this.clienteCRM = clienteCRM;
+	}
 
 
 	public PedidoCliente(UUID idPedidoCliente, String estado, String prioridad, String formaPago, BigDecimal costeTotal,

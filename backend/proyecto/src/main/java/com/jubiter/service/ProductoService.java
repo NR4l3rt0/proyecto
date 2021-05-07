@@ -8,8 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jubiter.Excepcion.IdNoEncontradoException;
-import com.jubiter.Excepcion.ParseadoBigDecimalException;
+import com.jubiter.exception.IdNoEncontradoException;
+import com.jubiter.exception.ParseadoBigDecimalException;
 import com.jubiter.modelo.Producto;
 import com.jubiter.repository.ProductoRepository;
 

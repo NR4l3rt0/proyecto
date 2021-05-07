@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
-import com.jubiter.Excepcion.IdNoEncontradoException;
+import com.jubiter.exception.IdNoEncontradoException;
 import com.jubiter.modelo.ClienteCRM;
 import com.jubiter.repository.ClienteCRMRepository;
 
