@@ -20,6 +20,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "pedido_cliente")
 public class PedidoCliente {
+	
+	// Composición para que tenga satisfacer condición de lógica de negocio (será una composición recíproca)
+	private Producto producto;
 
 	@Id
 	@GeneratedValue

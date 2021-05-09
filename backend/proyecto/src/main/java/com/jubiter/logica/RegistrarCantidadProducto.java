@@ -22,7 +22,7 @@ public class RegistrarCantidadProducto implements ManagerDeExistencias, Organiza
 
 		if(producto != null) {
 			
-			producto.setCantidad(producto.getCantidad() - cantidad);
+			producto.setCantidad(producto.getCantidad() - cantidad);   // Se debería considerar la posible concurrencia
 			productoRepository.save(producto);
 			
 		} else {
@@ -47,7 +47,8 @@ public class RegistrarCantidadProducto implements ManagerDeExistencias, Organiza
 		
 		if(producto.getCantidad() < cantidad) {
 			System.out.println("Existencias: " + producto.getCantidad() + ", cantidad requerida: " + cantidad);
-			throw new CantidadDeProductoInsuficienteException("No hay suficiente cantidad para suplir el pedido.");
+			throw new CantidadDeProductoInsuficienteException("No hay suficiente cantidad para suplir el pedido. "
+																+ "Genera los avisos correspondientes");
 		}
 		
 	

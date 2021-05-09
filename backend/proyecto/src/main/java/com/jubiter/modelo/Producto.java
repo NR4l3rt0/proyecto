@@ -23,6 +23,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table
 public class Producto {
 	
+	// Composición bidireccional por necesidad de implementación lógica de negocio
+	private PedidoCliente pedidoCliente;
+	
 	@Id
 	@SequenceGenerator(
 			name = "secuencia_producto",		 						  
