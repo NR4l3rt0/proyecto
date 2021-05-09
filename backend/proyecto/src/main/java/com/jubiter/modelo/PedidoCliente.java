@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class PedidoCliente {
 	
 	// Composición para que tenga satisfacer condición de lógica de negocio (será una composición recíproca)
+	@Transient
 	private Producto producto;
 
 	@Id

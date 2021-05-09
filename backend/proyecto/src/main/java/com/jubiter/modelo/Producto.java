@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.PositiveOrZero;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,7 +24,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table
 public class Producto {
 	
-	// Composición bidireccional por necesidad de implementación lógica de negocio
+	// Composición bidireccional por necesidad de implementación lógica de negocio (no se persiste, por eso Transient)
+	@Transient
 	private PedidoCliente pedidoCliente;
 	
 	@Id
@@ -59,6 +61,19 @@ public class Producto {
 		super();
 	}
 
+	
+	public Producto(String nombre, String categoria, String proveedor, String fechaCaducidad,
+			int cantidad, @PositiveOrZero BigDecimal precio) {
+		super();
+		this.nombre = nombre;
+		this.categoria = categoria;
+		this.proveedor = proveedor;
+		this.cantidad = cantidad;
+		this.precio = precio;
+		setFechaCaducidad(fechaCaducidad);
+
+	}
+	
 	
 	public Producto(String nombre, String categoria, String proveedor, LocalDate fechaCaducidad,
 			int cantidad, @PositiveOrZero BigDecimal precio) {
@@ -136,6 +151,10 @@ public class Producto {
 
 	public void setFechaCaducidad(LocalDate fechaCaducidad) {
 		this.fechaCaducidad = fechaCaducidad;
+	}
+
+	public void setFechaCaducidad(String fechaCaducidad) {
+		this.fechaCaducidad = LocalDate.parse(fechaCaducidad);
 	}
 
 

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.jubiter.modelo.ClienteCRM;
 import com.jubiter.modelo.Producto;
 import com.jubiter.service.ProductoService;
 
@@ -27,6 +28,7 @@ import com.jubiter.service.ProductoService;
  */
 @RestController
 @RequestMapping("/stock")
+@CrossOrigin(origins = "http://localhost:3000")   // Permite el acceso desde el cliente
 public class ProductoControlador {
 
 	
@@ -56,6 +58,7 @@ public class ProductoControlador {
 	
 	
 	
+	
 	@DeleteMapping("/productos/{productoId}")
 	public void deleteCliente(@PathVariable int productoId) {
 		productoService.deleteProducto(productoId);
@@ -67,10 +70,12 @@ public class ProductoControlador {
 			  consumes = "application/json-patch+json")
 	public void modifyCliente(
 			    @PathVariable("productoId") int productoId,
-			  	@RequestParam(required = false) BigDecimal precio
+			  	@RequestParam(required = false) BigDecimal precio,
+			  	@RequestParam(required = false) Integer cantidad
+			  	
 			) {
 		
-		productoService.modifyProducto(productoId, precio);	
+		productoService.modifyProducto(productoId, precio, cantidad);	
 	}		
 
 	

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.jubiter.exception.IdNoEncontradoException;
 import com.jubiter.exception.ParseadoBigDecimalException;
+import com.jubiter.modelo.ClienteCRM;
 import com.jubiter.modelo.Producto;
 import com.jubiter.repository.ProductoRepository;
 
@@ -77,7 +78,7 @@ public class ProductoService {
 	}
 
 
-	public void modifyProducto(int productoId, BigDecimal precio) {
+	public void modifyProducto(int productoId, BigDecimal precio, Integer cantidad  ) {
 			
 		Producto producto = productoRepository.findById(productoId);
 		
@@ -89,15 +90,38 @@ public class ProductoService {
 
 		try {
 			
-			producto.setPrecio(precio);
+			if(precio != null && 
+			   precio != producto.getPrecio() && 
+			   precio.doubleValue() > 0) {
+					producto.setPrecio(precio);
+			}
+			
 			
 		} catch (Exception e) {
 	
 			e.getStackTrace();
 			throw new ParseadoBigDecimalException("El precio debe ser un campo numérico");
 		}
+		
+		
+		try {
+			
+			if(cantidad > 0 &&
+			   cantidad != producto.getCantidad()) {
+				producto.setCantidad(cantidad);
+			}
+			
+			
+		} catch (Exception e) {
+	
+			e.getStackTrace();
+			
+		}
+		
+		
 			
 		productoRepository.save(producto);
 	}
+
 
 }

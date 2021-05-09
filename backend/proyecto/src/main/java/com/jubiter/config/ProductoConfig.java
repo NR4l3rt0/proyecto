@@ -31,19 +31,39 @@ public class ProductoConfig {
 				    	new Producto("pechuga pavo", "cocido",
 				    			"Frial", LocalDate.parse("2021-08-01"), 100, BigDecimal.valueOf(10.95)),
 				    	new Producto("jamón cocido", "cocido",
-								"Campo frío", LocalDate.parse("2021-07-10"), 100, BigDecimal.valueOf(6.95)),	    	
+								"Campofrío", LocalDate.parse("2021-07-10"), 100, BigDecimal.valueOf(6.95)),	    	
 				    	new Producto("chorizo", "curado",
-								"revilla", LocalDate.parse("2021-08-01"), 80, BigDecimal.valueOf(7.95)),
+								"Revilla", LocalDate.parse("2021-08-01"), 80, BigDecimal.valueOf(7.95)),
 				    	new Producto("jamón serrano DO", "curado",
 								"Montesierra", LocalDate.parse("2021-11-01"), 120, BigDecimal.valueOf(35.00)),
-				    	new Producto("semi curado", "queso",
+				    	new Producto( "queso", "semi curado",
 								"Quelac", LocalDate.parse("2021-10-01"), 140, BigDecimal.valueOf(5.75)),
-				    	new Producto("curado", "queso",
+				    	new Producto("queso","curado", 
 								"Quelac", LocalDate.parse("2021-09-01"), 140, BigDecimal.valueOf(14.95)),
 				    	new Producto("mango", "paté",
 								"Capdevila", LocalDate.parse("2021-08-01"), 55, BigDecimal.valueOf(13.50)),
 				    	new Producto("champagne", "paté",
 								"Capdevila", LocalDate.parse("2021-08-01"), 50, BigDecimal.valueOf(15.95))
+						
+				    	/*new Producto("pechuga pavo", "cocido",
+				    			"Frial", "2021-08-01", 100, BigDecimal.valueOf(10.95)),
+				    	new Producto("jamón cocido", "cocido",
+								"Campofrío", "2021-07-10", 100, BigDecimal.valueOf(6.95)),	    	
+				    	new Producto("chorizo", "curado",
+								"Revilla", "2021-08-01", 80, BigDecimal.valueOf(7.95)),
+				    	new Producto("jamón serrano DO", "curado",
+								"Montesierra", "2021-11-01", 120, BigDecimal.valueOf(35.00)),
+				    	new Producto( "queso", "semi curado",
+								"Quelac", "2021-10-01", 140, BigDecimal.valueOf(5.75)),
+				    	new Producto("queso","curado", 
+								"Quelac", "2021-09-01", 140, BigDecimal.valueOf(14.95)),
+				    	new Producto("mango", "paté",
+								"Capdevila", "2021-08-01", 55, BigDecimal.valueOf(13.50)),
+				    	new Producto("champagne", "paté",
+								"Capdevila", "2021-08-01", 50, BigDecimal.valueOf(15.95))*/
+						
+						
+						
 						)
     		);
         };
