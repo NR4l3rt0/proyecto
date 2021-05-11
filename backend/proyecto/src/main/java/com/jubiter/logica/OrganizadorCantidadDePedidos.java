@@ -2,5 +2,5 @@ package com.jubiter.logica;
 
 public interface OrganizadorCantidadDePedidos {
 
-	String restarCantidadDeProducto(int idProducto, int cantidad);
+	void restarCantidadDeProducto(int idProducto, int cantidad);
 }

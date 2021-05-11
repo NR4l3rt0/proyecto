@@ -28,7 +28,7 @@ import com.jubiter.service.ProductoService;
  */
 @RestController
 @RequestMapping("/stock")
-@CrossOrigin(origins = "http://localhost:3000")   // Permite el acceso desde el cliente
+@CrossOrigin(origins = "http://localhost:3000")   
 public class ProductoControlador {
 
 	

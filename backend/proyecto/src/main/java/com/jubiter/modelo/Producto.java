@@ -38,7 +38,7 @@ public class Producto {
 			generator = "secuencia_producto")
 	@Column(name = "pk_id_producto")        // Relación con tabla AlmacenEmpresa
 	private Integer idProducto;
-	
+
 	private String nombre;
 	private String categoria;
 	private String proveedor;			// Podría ser tipo CIF(DNI) o nombre empresa
@@ -62,6 +62,14 @@ public class Producto {
 	}
 
 	
+	
+	public Producto(Integer idProducto, int cantidad) {
+		super();
+		this.idProducto = idProducto;
+		this.cantidad = cantidad;
+	}
+
+
 	public Producto(String nombre, String categoria, String proveedor, String fechaCaducidad,
 			int cantidad, @PositiveOrZero BigDecimal precio) {
 		super();
@@ -87,7 +95,18 @@ public class Producto {
 
 	}
 	
-	
+	public Producto(Integer idProducto, String nombre, String categoria, String proveedor, LocalDate fechaCaducidad,
+			int cantidad, @PositiveOrZero BigDecimal precio) {
+		super();
+		this.idProducto = idProducto;
+		this.nombre = nombre;
+		this.categoria = categoria;
+		this.proveedor = proveedor;
+		this.fechaCaducidad = fechaCaducidad;
+		this.cantidad = cantidad;
+		this.precio = precio;
+
+	}
 	
 	public Producto(Integer idProducto, String nombre, String categoria, String proveedor, LocalDate fechaCaducidad,
 			int cantidad, @PositiveOrZero BigDecimal precio,

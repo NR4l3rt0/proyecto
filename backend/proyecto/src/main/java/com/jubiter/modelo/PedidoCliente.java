@@ -22,9 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "pedido_cliente")
 public class PedidoCliente {
 	
-	// Composición para que tenga satisfacer condición de lógica de negocio (será una composición recíproca)
-	@Transient
-	private Producto producto;
 
 	@Id
 	@GeneratedValue
@@ -61,10 +58,36 @@ public class PedidoCliente {
 	private ClienteCRM clienteCRM; 
     
     
+	// Composición para que tenga satisfacer condición de lógica de negocio (será una composición recíproca)
+	@Transient
+	private Producto producto;
+
+    
     
     public PedidoCliente() {
     	super();
     }
+
+    public PedidoCliente(UUID idPedidoCliente) {
+    	super();
+		this.idPedidoCliente = idPedidoCliente;
+    }
+
+	public PedidoCliente(UUID idPedidoCliente, Producto producto) {
+		super();
+		this.idPedidoCliente = idPedidoCliente;
+		this.producto = producto;
+	}
+
+
+
+	public PedidoCliente(UUID idPedidoCliente, ClienteCRM clienteCRM, Producto producto) {
+		super();
+		this.idPedidoCliente = idPedidoCliente;
+		this.clienteCRM = clienteCRM;
+		this.producto = producto;
+	}
+
 
 
 	public PedidoCliente(String estado, String prioridad, String formaPago, BigDecimal costeTotal,
@@ -217,6 +240,30 @@ public class PedidoCliente {
 		this.clienteProductoAlmacenEmpresa = clienteProductoAlmacenEmpresa;
 	}
 
+
+
+
+	public ClienteCRM getClienteCRM() {
+		return clienteCRM;
+	}
+
+
+
+	public void setClienteCRM(ClienteCRM clienteCRM) {
+		this.clienteCRM = clienteCRM;
+	}
+
+
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
 
 
 

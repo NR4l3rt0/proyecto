@@ -1,6 +1,8 @@
 package com.jubiter.modelo;
 
 
+import java.util.UUID;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -31,8 +33,9 @@ public class ClienteProductoAlmacenEmpresa {
 	@JoinColumn(name = "fk_id_pedido_cliente")        
 	private PedidoCliente pedidoCliente;
 	
-	
-	
+	private int cantidad;
+
+
 
 
 
@@ -48,8 +51,19 @@ public class ClienteProductoAlmacenEmpresa {
 
 
 	
-	
-	
+
+
+	public ClienteProductoAlmacenEmpresa(ClienteProductoAlmacenEmpresaCK idClienteProductoAlmacenCK,
+			AlmacenEmpresa almacenEmpresa, Producto producto, PedidoCliente pedidoCliente, int cantidad) {
+		super();
+		this.idClienteProductoAlmacenCK = idClienteProductoAlmacenCK;
+		this.almacenEmpresa = almacenEmpresa;
+		this.producto = producto;
+		this.pedidoCliente = pedidoCliente;
+		this.cantidad = cantidad;
+	}
+
+
 	public ClienteProductoAlmacenEmpresa(AlmacenEmpresa almacenEmpresa, Producto producto, PedidoCliente pedidoCliente) {
 		super();
 		this.almacenEmpresa = almacenEmpresa;
@@ -135,12 +149,20 @@ public class ClienteProductoAlmacenEmpresa {
 
 
 
+
 	public void setPedidoCliente(PedidoCliente pedidoCliente) {
 		this.pedidoCliente = pedidoCliente;
 	}
 
 
+	public int getCantidad() {
+		return cantidad;
+	}
 
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
 
 
 
@@ -148,12 +170,8 @@ public class ClienteProductoAlmacenEmpresa {
 	public String toString() {
 		return "ClienteProductoAlmacenEmpresa [idClienteProductoAlmacenCK=" + idClienteProductoAlmacenCK
 				+ ", almacenEmpresa=" + almacenEmpresa + ", producto=" + producto + ", pedidoCliente=" + pedidoCliente
-				+ "]";
+				+ ", cantidad=" + cantidad + "]";
 	}
-
-
-
-
 
 
 	@Override

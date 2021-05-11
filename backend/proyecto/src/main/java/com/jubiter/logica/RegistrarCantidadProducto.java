@@ -16,22 +16,27 @@ public class RegistrarCantidadProducto implements ManagerDeExistencias, Organiza
 	public ProductoRepository productoRepository;
 	
 	@Override
-	public String restarCantidadDeProducto(int idProducto, int cantidad) {
+	public void restarCantidadDeProducto(int idProducto, int cantidad) {
 		
-		Producto producto = productoRepository.findById(idProducto);
-
+		throw new RuntimeException("hola?");
+		
+		//Producto producto = productoRepository.findById(idProducto);
+		
+		//throw new RuntimeException(producto.toString());
+/*
 		if(producto != null) {
 			
 			producto.setCantidad(producto.getCantidad() - cantidad);   // Se debería considerar la posible concurrencia
-			productoRepository.save(producto);
+			
+			productoRepository.save(producto);						   // Se hace un update del producto
 			
 		} else {
 			throw new IllegalStateException("Producto no encontrado.");
 		}
 		
-
-		return String.format("Cantidad actual del producto con ID %s: %s ", producto.getIdProducto(), producto.getCantidad());
-
+*/
+		//return String.format("Cantidad actual del producto con ID %s: %s ", producto.getIdProducto(), producto.getCantidad());
+		
 	}
 
 	

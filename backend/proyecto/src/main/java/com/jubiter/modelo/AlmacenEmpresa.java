@@ -46,6 +46,14 @@ public class AlmacenEmpresa {
 
 		
 		
+		public AlmacenEmpresa(Integer idAlmacenEmpresa) {
+			super();
+			this.idAlmacenEmpresa = idAlmacenEmpresa;
+		}
+
+
+
+
 		public AlmacenEmpresa(String nombreEmpresa) {
 			super();
 			this.nombreEmpresa = nombreEmpresa;

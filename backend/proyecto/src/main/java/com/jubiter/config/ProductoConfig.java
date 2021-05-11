@@ -36,7 +36,7 @@ public class ProductoConfig {
 								"Revilla", LocalDate.parse("2021-08-01"), 80, BigDecimal.valueOf(7.95)),
 				    	new Producto("jamón serrano DO", "curado",
 								"Montesierra", LocalDate.parse("2021-11-01"), 120, BigDecimal.valueOf(35.00)),
-				    	new Producto( "queso", "semi curado",
+				    	new Producto( "queso semi", "semi curado",
 								"Quelac", LocalDate.parse("2021-10-01"), 140, BigDecimal.valueOf(5.75)),
 				    	new Producto("queso","curado", 
 								"Quelac", LocalDate.parse("2021-09-01"), 140, BigDecimal.valueOf(14.95)),
