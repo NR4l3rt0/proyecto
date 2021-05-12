@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -24,6 +25,7 @@ import com.jubiter.service.EmpleadoRRHHService;
 
 @RestController
 @RequestMapping("/rrhh")
+@CrossOrigin(origins = "http://localhost:3000") 
 public class EmpleadoRRHHControlador {
 
 

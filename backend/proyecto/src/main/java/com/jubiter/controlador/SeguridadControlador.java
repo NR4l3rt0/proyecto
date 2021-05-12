@@ -1,3 +1,5 @@
+/*
+
 package com.jubiter.controlador;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,3 +16,5 @@ public class SeguridadControlador {
 		return "Esta web pudiera y debiera tener seguridad en algunas partes";
 	}
 }
+
+*/

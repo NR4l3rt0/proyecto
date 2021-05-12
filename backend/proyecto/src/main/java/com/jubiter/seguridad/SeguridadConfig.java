@@ -1,3 +1,5 @@
+/*
+
 package com.jubiter.seguridad;
 
 import org.springframework.context.annotation.Bean;
@@ -25,7 +27,7 @@ public class SeguridadConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests().anyRequest().fullyAuthenticated().and().httpBasic();
-	}*/
+	}
 	
 	
 	
@@ -35,7 +37,7 @@ public class SeguridadConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests().antMatchers("/rest/**").fullyAuthenticated().and().httpBasic();
-	}*/
+	}
 	
 	
 	
@@ -57,4 +59,4 @@ public class SeguridadConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-}
+}*/
