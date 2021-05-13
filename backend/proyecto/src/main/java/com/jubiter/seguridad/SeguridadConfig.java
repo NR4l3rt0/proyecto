@@ -1,5 +1,5 @@
-/*
 
+/*
 package com.jubiter.seguridad;
 
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,7 @@ public class SeguridadConfig extends WebSecurityConfigurerAdapter {
 		auth.inMemoryAuthentication().withUser("admin").password("admin").roles("admin");
 	}
 	
-	/* Para todo el API, acceso general a ese socket
+	 //Para todo el API, acceso general a ese socket
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
@@ -32,11 +32,11 @@ public class SeguridadConfig extends WebSecurityConfigurerAdapter {
 	
 	
 	
-	/* Para URL, no se puede acceder si empieza por ese path
+	 //Para URL, no se puede acceder si empieza por ese path
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/rest/**").fullyAuthenticated().and().httpBasic();
+		http.authorizeRequests().antMatchers("/**").fullyAuthenticated().and().httpBasic();
 	}
 	
 	
@@ -45,12 +45,12 @@ public class SeguridadConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/rest/**")
+		http.authorizeRequests().antMatchers("/auth/**")
 			.hasAnyRole("admin").anyRequest()
 			.fullyAuthenticated().and().httpBasic();
 	}
 	
-	
+
 	
 	
 	@Bean
