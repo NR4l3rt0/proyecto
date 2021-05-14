@@ -21,7 +21,17 @@ import com.jubiter.modelo.PedidoCliente;
 import com.jubiter.service.ClienteCRMService;
 import com.jubiter.service.PedidoClienteService;
 
-
+/**
+ * Esta clase implementa simplemente el servicio que permitirá ver una variación
+ * en la cantidad del producto.
+ * Así tanto el cliente como el empleado que controle la mercancía podrá hacer el seguimiento
+ * casi en tiempo real.
+ * No obstante, se presentan problemas que se deberían considerar para implementar los otros 
+ * servicios: cómo se ve envuelto el objeto UUID, el flujo de streams, y el concepto 'transient'
+ * 
+ * @author nr_alberto
+ *
+ */
 @RestController
 @RequestMapping("/area-cliente")
 @CrossOrigin(origins = "http://localhost:3000") 
@@ -56,10 +66,7 @@ public class PedidoClienteControlador {
 		return pedidoClienteService.getPedidoCliente(idPedidoCliente);
 	}
 	
-	
 
-	
-	
 	@DeleteMapping("/mis-pedidos/{idPedidoCliente}")
 	public void deleteCliente(@PathVariable UUID idPedidoCliente) {
 		pedidoClienteService.deletePedidoCliente(idPedidoCliente);

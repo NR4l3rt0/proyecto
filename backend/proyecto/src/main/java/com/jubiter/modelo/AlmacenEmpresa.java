@@ -14,7 +14,15 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
-
+/**
+ * Establece una unión entre almacén y empresa por motivos de simplicidad. Pues en un 
+ * primer momento sólo se plantea tener un almacén centralizado; pero, podría darse el caso 
+ * de que existan múltiples almacenes. O que cada almacén tenga su propio proveedor, etc...
+ * Por tanto, dependerá también del transcurso lógico del plan de acción empresarial.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Entity
 @Table(name = "almacen_empresa")
 public class AlmacenEmpresa {

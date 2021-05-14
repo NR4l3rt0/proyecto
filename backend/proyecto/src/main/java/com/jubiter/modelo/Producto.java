@@ -19,7 +19,16 @@ import javax.validation.constraints.PositiveOrZero;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+/**
+ * Entidad que modela el producto.
+ * Esta clase es otro tipo de entidad que puede establecer muchas relaciones con otras
+ * entidades según vaya evolucionando la lógica y necesidades del negocio.
+ * Se han establecido algunas relaciones y se han sugerido otras. Por ejemplo, también
+ * podría relacionarse con los proveedores de la empresa o competidores.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Entity
 @Table
 public class Producto {

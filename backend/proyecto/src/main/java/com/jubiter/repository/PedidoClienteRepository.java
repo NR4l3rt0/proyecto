@@ -12,6 +12,16 @@ import java.util.UUID;
 import java.util.Optional;
 import com.jubiter.modelo.ClienteCRM;
 
+/**
+ * No pude implementar e investigar correctamente sobre JPQL, pero es interesante
+ * saber que se puden realizar Querys tanto con este lenguaje como con SQL si se 
+ * implementa desde el Repository.
+ * 
+ * Hay que respetar la nomenclatura.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Repository
 public interface PedidoClienteRepository 
 						extends CrudRepository<PedidoCliente, Integer> {

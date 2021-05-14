@@ -1,0 +1,9 @@
+com.jubiter
+com.jubiter.config
+com.jubiter.controlador
+com.jubiter.exception
+com.jubiter.logica
+com.jubiter.modelo
+com.jubiter.repository
+com.jubiter.seguridad
+com.jubiter.service

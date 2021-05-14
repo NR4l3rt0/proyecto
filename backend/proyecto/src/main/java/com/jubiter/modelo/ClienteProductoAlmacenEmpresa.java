@@ -10,14 +10,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+/**
+ * Implementa la clave primaria definida para el caso y se trata de una entidad
+ * que persistirá en la base de datos.
+ * 
+ * De alguna manera esta relación ternaria se simplifica diviéndola en relaciones 1:M 
+ * menores y bidireccionales.
+ * 
+ * De especial interés es el uso de las anotaciones, ya que Hibernate y Spring se comunican
+ * a través de ellas.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Entity
 @Table(name = "cliente_producto_almacen")
 public class ClienteProductoAlmacenEmpresa {
 
-	
+	/**
+	 * Materializa la clave personalizada, es decir, la identidad creada.
+	 */
 	@EmbeddedId
 	private ClienteProductoAlmacenEmpresaCK idClienteProductoAlmacenCK;
 	
+	/**
+	 * Orden lógico de estas anotaciones:
+	 * Tipo de relación.
+	 * Campo con el que se relaciona.
+	 * Nombre con el que se identifica la columna en BD.
+	 */
 	@ManyToOne
 	@MapsId("idAlmacen")
 	@JoinColumn(name = "fk_id_almacen_empresa")

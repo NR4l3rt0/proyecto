@@ -17,7 +17,13 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-
+/**
+ * Entidad que modela la entidad del pedido.
+ * Se relaciona con la tabla del enlace ternario, y con la tabla de clientes.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Entity
 @Table(name = "pedido_cliente")
 public class PedidoCliente {
@@ -47,19 +53,25 @@ public class PedidoCliente {
 	@Column(name = "fecha_entrega")
 	private LocalDate fechaEntrega;
 	
-	@JsonIgnore
+	/**
+	 * Establecerá una relación con el conjunto de pedidos y productos que tenga
+	 * un determinado cliente.
+	 */
+	@JsonIgnore										// Hace que no se muestre en el paso JSON
     @OneToMany(mappedBy = "pedidoCliente")
 	private Set<ClienteProductoAlmacenEmpresa> clienteProductoAlmacenEmpresa; 
     
     
-	
-    @ManyToOne(targetEntity = ClienteCRM.class)
+	/**
+	 * Trata de explicar que un cliente tendrá muchos pedidos.
+	 */
+    @ManyToOne(targetEntity = ClienteCRM.class) // Este atributo indica con quien se relaciona.
     @JoinColumn(name = "fk_id_nro_socio")
 	private ClienteCRM clienteCRM; 
     
-    
+    // Campo que no persiste
 	// Composición para que tenga satisfacer condición de lógica de negocio (será una composición recíproca)
-	@Transient
+    @Transient   				
 	private Producto producto;
 
     

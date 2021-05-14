@@ -18,7 +18,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.Set;
 
-
+/**
+ * Clase que modela al cliente y su interacción con el negocio.
+ * Se establecen algunas restricciones mínimas a través de anotaciones.
+ * 
+ * Se relaciona con la clase {@link com.jubiter.modelo.PedidoCliente}, aunque está
+ * abierta a otras posibilidades.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Entity
 @Table(name = "cliente_crm")
 public class ClienteCRM extends Persona {

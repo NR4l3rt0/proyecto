@@ -18,16 +18,28 @@ import com.jubiter.exception.IdNoEncontradoException;
 import com.jubiter.modelo.ClienteCRM;
 import com.jubiter.repository.ClienteCRMRepository;
 
-
+/**
+ * Se encarga de implementar el servicio entre controlador -repositorio.
+ * Es muy similar a la lógica expuesta 
+ * {@link com.jubiter.service.ProductoService} y 
+ * {@link com.jubiter.service.EmpleadoRRHHService}.
+ * 
+ * Se propone un PATCH con un foco distinto para analizar hábitos o mercado meta.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Service
 public class ClienteCRMService {
 	
-	//private ObjectMapper objetoMapeador = new ObjectMapper();
 	
 	@Autowired
 	private ClienteCRMRepository clienteCRMRepository;  // Inyección
 	
-	
+	/**
+	 * HTTP GET
+	 * @return lista de clientes
+	 */
 	public List<ClienteCRM>getAllClientes(){
 		List<ClienteCRM> clientes = new ArrayList<>();
 		clienteCRMRepository.findAll()
@@ -37,7 +49,11 @@ public class ClienteCRMService {
 				
 	}
 
-	
+	/**
+	 * HTTP GET
+	 * @param clienteId
+	 * @return un único cliente indicado por ID
+	 */
 	public ClienteCRM getCliente(int clienteId){	
 		
 		boolean existe = clienteCRMRepository.existsById(clienteId);
@@ -53,9 +69,13 @@ public class ClienteCRMService {
 	}
 	
 
-	
+	/**
+	 * HTTP POST
+	 * @param cliente
+	 */
 	public void addCliente(ClienteCRM cliente) {
 		
+		// Se plantea un registro en empresa con tfno o email
 		if(cliente.getEmail().isBlank() && cliente.getTfno().isBlank()) {
 			throw new IllegalStateException(
 					"Es necesario aportar un email o un teléfono como mínimo");
@@ -66,7 +86,12 @@ public class ClienteCRMService {
 	}
 
 	
-
+	/**
+	 * HTTP PUT 
+	 * 
+	 * @param clienteId, de variable PATH
+	 * @param cliente, request del body
+	 */
 	public void updateCliente(int clienteId, ClienteCRM cliente) {
 		
 		if(cliente.getEmail().isBlank() && cliente.getTfno().isBlank()) {
@@ -80,7 +105,11 @@ public class ClienteCRMService {
 	}
 
 	
-	
+	/**
+	 * HTTP DELETE
+	 * 
+	 * @param clienteId, del PATH
+	 */
 	public void deleteCliente(int clienteId) {
 		
 		boolean existe = clienteCRMRepository.existsById(clienteId);
@@ -95,6 +124,18 @@ public class ClienteCRMService {
 	}
 
 
+	/**
+	 * HTTP PATCH
+	 * 
+	 * Permite modificar nombre, email, tfno, localidad y fechaNacimiento
+	 * 
+	 * @param empleadoId
+	 * @param nombre
+	 * @param email
+	 * @param tfno
+	 * @param localidad
+	 * @param fechaNacimiento
+	 */
 	public void modifyCliente(int clienteId, String nombre, String email, String tfno, 
 			String localidad,
 			String fechaNacimiento) {

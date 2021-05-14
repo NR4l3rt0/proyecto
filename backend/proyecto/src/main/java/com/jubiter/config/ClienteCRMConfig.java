@@ -10,6 +10,12 @@ import org.springframework.context.annotation.Configuration;
 import com.jubiter.modelo.ClienteCRM;
 import com.jubiter.repository.ClienteCRMRepository;
 
+/**
+ * Inicializa la tabla de los clientes en la BBDD. Se ayuda del repositorio.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Configuration
 public class ClienteCRMConfig {
 

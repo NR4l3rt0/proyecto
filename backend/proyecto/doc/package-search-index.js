@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.jubiter"},{"l":"com.jubiter.config"},{"l":"com.jubiter.controlador"},{"l":"com.jubiter.exception"},{"l":"com.jubiter.modelo"},{"l":"com.jubiter.repository"},{"l":"com.jubiter.seguridad"},{"l":"com.jubiter.service"}];updateSearchResults();

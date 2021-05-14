@@ -6,6 +6,15 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+
+/**
+ * Clase serializable que sirve para establecer la clave primaria compuesta.
+ * Es necesario que existan las propiedades a agrupar, constructores, getters/setters,
+ * control equals sobreescribiendo el hashcode, y que sea Serializable.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Embeddable
 public class ClienteProductoAlmacenEmpresaCK implements Serializable {
 	

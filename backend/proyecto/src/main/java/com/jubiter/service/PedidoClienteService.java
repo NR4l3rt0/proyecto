@@ -21,7 +21,18 @@ import com.jubiter.repository.ClienteProductoAlmacenEmpresaRepository;
 import com.jubiter.repository.PedidoClienteRepository;
 import com.jubiter.repository.ProductoRepository;
 
-
+/**
+ * Este servicio se encarga de persistir el pedido en la tabla.
+ * Se relaciona con el producto, restará la cantidad que haya consumido el cliente
+ * en su pedido (implícitamente chequearía el/los almacén/almacenes) y persistiría 
+ * el registro en la tabla de la relación ternaria.
+ * No obstante, no se pudo implementar. Y debido a otro tipo de errores, se hardcodeó.
+ * 
+ * Se dejan las clases definidas para mejorar en una próxima iteración.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Service
 public class PedidoClienteService {
 
@@ -39,37 +50,23 @@ public class PedidoClienteService {
 	
 	private RegistrarCantidadProducto registrarCantidadProducto;
 	
-	private JdbcTemplate jdbcTemplate;
+	// private JdbcTemplate jdbcTemplate; -> probé otras opciones
 	
 
+
 	
-	/*
-	// Obtiene todos los productos de todos los pedidos
-	public List<PedidoCliente> getAllPedidoCliente(ClienteCRM clienteCRM) {
-		List<PedidoCliente> pedidosCliente = new ArrayList<>();
-		pedidoClienteRepository.findAllPedidoClienteByClienteCRM(clienteCRM)
-						 	.forEach(pedidosCliente::add);    
-		return pedidosCliente;
-	}
+	//@Transactional -> indicaría que siga el principio ACID, similar a commit/rollback en Spring
 	
-	
-	// Obtiene todos los productos de un pedido
-	public List<PedidoCliente> getPedidoCliente(UUID pedidoClienteId){
-		List<PedidoCliente> productosPedidoCliente = new ArrayList<>();
-		pedidoClienteRepository.findPedidoClienteById(pedidoClienteId)
-						 	.forEach(productosPedidoCliente::add); 
-		
-		return productosPedidoCliente;
-		
-	}
-	
-		public void deletePedidoCliente(UUID idPedidoCliente) {
-		pedidoClienteRepository.deleteById(idPedidoCliente);
-	}
-	
-	*/
-	
-	//@Transactional
+	/**
+	 * Toma los valores necesarios del objeto pasado como argumento.
+	 * Trae un producto, y hace su lógica con la clase producto.
+	 * Por último haría la persistencia en cada lado.
+	 * 
+	 * PD: quedará mucho más clara cuando pueda hacer uso de las clases
+	 * sugeridas.
+	 * 
+	 * @param pedidoCliente
+	 */
 	public void addPedidoCliente(PedidoCliente pedidoCliente) {
 		
 		int cantidadProducto = pedidoCliente.getProducto().getCantidad();
@@ -78,9 +75,6 @@ public class PedidoClienteService {
 		int idProducto = pedidoCliente.getProducto().getIdProducto();
 
 		
-		// Este código iría a fuera, pero no sé porqué no me llama al otro
-		// método y me da error en tiempo de ejecución (lo dejo como prueba 
-		// y para reflexinar yo). Está abajo
 		Producto producto = productoRepository.findById(idProducto);
 		
 		int totalProducto = producto.getCantidad() - cantidadProducto;
@@ -96,6 +90,42 @@ public class PedidoClienteService {
 			throw new  RuntimeException("error al guardar pedido");
 		}
 		
+		
+		
+		
+		
+		/*
+		 
+		 Este código iría a fuera, pero no sé porqué no me llama al otro
+		 método y me da error en tiempo de ejecución (lo dejo como prueba 
+		 y para reflexinar yo). 
+		 
+		  
+		 
+		// Obtiene todos los productos de todos los pedidos
+		public List<PedidoCliente> getAllPedidoCliente(ClienteCRM clienteCRM) {
+			List<PedidoCliente> pedidosCliente = new ArrayList<>();
+			pedidoClienteRepository.findAllPedidoClienteByClienteCRM(clienteCRM)
+							 	.forEach(pedidosCliente::add);    
+			return pedidosCliente;
+		}
+		
+		
+		// Obtiene todos los productos de un pedido
+		public List<PedidoCliente> getPedidoCliente(UUID pedidoClienteId){
+			List<PedidoCliente> productosPedidoCliente = new ArrayList<>();
+			pedidoClienteRepository.findPedidoClienteById(pedidoClienteId)
+							 	.forEach(productosPedidoCliente::add); 
+			
+			return productosPedidoCliente;
+			
+		}
+		
+			public void deletePedidoCliente(UUID idPedidoCliente) {
+			pedidoClienteRepository.deleteById(idPedidoCliente);
+		}
+		
+		*/
 		/*
 		
 		//ClienteProductoAlmacenEmpresa cpaer = new ClienteProductoAlmacenEmpresa(idAlmacen, idProducto, idPedidoCliente, cantidadProducto);

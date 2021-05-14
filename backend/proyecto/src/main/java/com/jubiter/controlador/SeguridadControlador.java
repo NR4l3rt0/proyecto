@@ -6,11 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Este controlador sirve de ejemplo para ser devuelto cuando se hace uso de SpringSecurity
+ * en la funcionalidad del aplicativo.
+ * 
+ * @author nr_alberto
+ *
+ */
 @RestController
 @RequestMapping("/auth")
 public class SeguridadControlador {
 
-	
+	/**
+	 * Método devuelto tras autenticarse.
+	 * 
+	 * @return una página simple embellecida con CSS.
+	 */
 	@GetMapping("/login")
 	public String informar() {
 		return "<html>"

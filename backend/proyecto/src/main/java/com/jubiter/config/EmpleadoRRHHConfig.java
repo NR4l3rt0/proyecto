@@ -12,7 +12,12 @@ import org.springframework.context.annotation.DependsOn;
 import com.jubiter.modelo.EmpleadoRRHH;
 import com.jubiter.repository.EmpleadoRRHHRepository;
 
-
+/**
+ * Inicializa la tabla de los empleados.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Configuration
 public class EmpleadoRRHHConfig {
 

@@ -1,5 +1,26 @@
 
 /*
+ 
+ #####################################################################
+ 
+ 
+ Esta clase no se usa en "producción" porque afecta el resultado al 
+ acceder desde cliente.
+ Pero se puede implementar rápidamente para, por ejemplo, dar acceso
+ al controlador de 'seguridad' acciendo por un rol específico. Se pensó
+ en admin.
+ 
+ Expone 3 formas de implementarse: 
+ - Para todo el aplicativo
+ - En función de un path concreto/método
+ - Por roles
+ 
+ 
+ 
+ #####################################################################
+ 
+ 
+ 
 package com.jubiter.seguridad;
 
 import org.springframework.context.annotation.Bean;

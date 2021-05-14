@@ -23,7 +23,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * Se aprovecha el concepto de herencia del paradigma OO y la particularidad
+ * de PostgreSQL para usar la programación orientada a objetos.
+ * De esta forma se ahorra repetir código y se trata de buscar la filosofía DRY.
+ * 
+ * Esta clase será implementada por {@link com.jubiter.modelo.EmpleadoRRHH} 
+ * y  {@link com.jubiter.modelo.ClienteCRM}.
+ * 
+ * Es de interés de cara a rellenar encuestas y formularios.
+ * 
+ * @author nr_alberto
+ *
+ */
 @MappedSuperclass
 public class Persona {
 	

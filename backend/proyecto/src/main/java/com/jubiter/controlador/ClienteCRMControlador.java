@@ -20,7 +20,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * De lógica muy similar a {@link com.jubiter.controlador.EmpleadoRRHHControlador}
+ * 
+ * Valdría la pena mencionar que, a veces PUT Y POST pueden realizar la misma función
+ * según la lógica que haya por debajo.
+ * También se aprovecha para indicar que hay muchas maneras de implementar estas 
+ * invocaciones.
+ * Especialmente interesante es el caso de PATCH.
+ * 
+ * @author nr_alberto
+ *
+ */
 @RestController
 @RequestMapping("/crm")
 @CrossOrigin(origins = "http://localhost:3000") 
@@ -67,13 +78,7 @@ public class ClienteCRMControlador {
 		clienteCRMService.deleteCliente(clienteId);
 	}
 	
-	/*
-	@PatchMapping(value = "/clientes/{clienteId}",
-				  consumes = "application/json-patch+json")
-	public void modifyCliente(@PathVariable int clienteId, @RequestBody JsonPatch patch) {
-		clienteCRMService.modifyCliente(clienteId, patch);
-	}*/
-	
+
 	@PatchMapping(value = "/clientes/{clienteId}",
 			  consumes = "application/json-patch+json")
 	public void modifyCliente(

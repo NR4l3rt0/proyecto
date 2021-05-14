@@ -16,6 +16,12 @@ import com.jubiter.modelo.PedidoCliente;
 import com.jubiter.modelo.Producto;
 import com.jubiter.repository.ClienteProductoAlmacenEmpresaRepository;
 
+/*
+ * Se plantea que forme parte de la lógica. Se debería llevar a cabo un estudio del componente
+ * con Hibernate y la base de datos.
+ * 
+ * Esta clase queda definida por un enlace ternario.
+ */
 public class ClienteProductoAlmacenEmpresaConfig {
 
 
@@ -25,27 +31,7 @@ public class ClienteProductoAlmacenEmpresaConfig {
     	
     	return args -> {
     		clienteProductoAlmacenEmpresa.saveAll(
-				List.of(/*
-						new ClienteProductoAlmacenEmpresa(new ClienteProductoAlmacenEmpresa(1, 2,
-								 							 UUID.fromString("aaa99b0c-7b54-4327-b81e-2a661ffe9dbe")),
-						new ClienteProductoAlmacenEmpresa(new ClienteProductoAlmacenEmpresaC 1, 1
-										UUID.fromString("bbb99b0c-7b54-4327-b81e-2a661ffe9dbe")),
-						new ClienteProductoAlmacenEmpresa(new ClienteProductoAlmacenEmpresa(1, 4
-															UUID.fromString("vvv99b0c-7b54-4327-b81e-2a661ffe9dbe")), 
-						new ClienteProductoAlmacenEmpresa(new ClienteProductoAlmacenEmpresa( 1, 2
-															UUID.fromString("vvv99b0c-7b54-4327-b81e-2a661ffe9dbe")*/
-						/*
-						
-						new ClienteProductoAlmacenEmpresa(
-								new AlmacenEmpresa("Jubiter S.L."), 
-								new Producto("pechuga pavo", "cocido",
-						    			"Frial", LocalDate.parse("2021-08-01"), 10, BigDecimal.valueOf(10.95)),
-								new PedidoCliente(UUID.fromString("aaa99b0c-7b54-4327-b81e-2a661ffe9dbe"), "online", "normal", "online",BigDecimal.valueOf(0.0),
-										LocalDate.now())
-
-
-						)*/
-					)
+				List.of()
 			);
     	};
     }

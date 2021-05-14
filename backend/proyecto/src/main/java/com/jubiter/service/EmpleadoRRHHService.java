@@ -11,16 +11,31 @@ import com.jubiter.exception.IdNoEncontradoException;
 import com.jubiter.modelo.EmpleadoRRHH;
 import com.jubiter.repository.EmpleadoRRHHRepository;
 
-
+/**
+ * Se encarga de implementar el servicio entre su controlador y su repositorio.
+ * Es muy similar a la lógica expuesta en el servicio de 
+ * {@link com.jubiter.service.ProductoService}.
+ * 
+ * Sí cabe mencionar que propone un PATCH mucho más extenso para poder trabajar 
+ * con diferentes departamentos dentro de la empresa.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Service
 public class EmpleadoRRHHService {
 		
-		
+		/**
+		 * Inyección del bean que hace uso del repositorio
+		 */
 		@Autowired
 		private EmpleadoRRHHRepository empleadoRRHHRepository;  
 		
 		
-		
+		/**
+		 * HTTP GET
+		 * @return lista de empleados
+		 */
 		public List<EmpleadoRRHH> getAllEmpleados(){
 			List<EmpleadoRRHH> empleados = new ArrayList<>();
 				empleadoRRHHRepository.findAll()
@@ -30,7 +45,11 @@ public class EmpleadoRRHHService {
 					
 		}
 
-		
+		/**
+		 * HTTP GET
+		 * @param empleadoId
+		 * @return un único empleado indicado por valor clave
+		 */
 		public EmpleadoRRHH getEmpleado(int empleadoId){
 			
 			boolean existe = empleadoRRHHRepository.existsById(empleadoId);
@@ -46,7 +65,10 @@ public class EmpleadoRRHHService {
 		}
 		
 
-		
+		/**
+		 * HTTP POST
+		 * @param empleado, objeto JSON 
+		 */
 		public void addEmpleado(EmpleadoRRHH empleado) {
 			
 			if(empleado.getDni().isBlank()) {
@@ -60,6 +82,12 @@ public class EmpleadoRRHHService {
 		}
 
 
+		/**
+		 * HTTP PUT 
+		 * 
+		 * @param empleadoId, de la variable PATH
+		 * @param empleado, del body
+		 */
 		public void updateEmpleado(int empleadoId, EmpleadoRRHH empleado) {
 			
 			if(empleado.getDni().isBlank()) {
@@ -73,6 +101,11 @@ public class EmpleadoRRHHService {
 		}
 
 		
+		/**
+		 * HTTP DELETE
+		 * 
+		 * @param empleadoId, del PATH
+		 */
 		public void deleteEmpleado(int empleadoId) {
 			
 			boolean existe = empleadoRRHHRepository.existsById(empleadoId);
@@ -85,7 +118,19 @@ public class EmpleadoRRHHService {
 			
 		}
 
-
+		/**
+		 * HTTP PATCH
+		 * 
+		 * Permite modificar nombre, email, tfno, tipo de empleado, jornada y salario
+		 * 
+		 * @param empleadoId
+		 * @param nombre
+		 * @param email
+		 * @param tfno
+		 * @param tipoEmpleado
+		 * @param jornadaTrabajo
+		 * @param salario
+		 */
 		public void modifyEmpleado(int empleadoId, String nombre, String email, String tfno,
 									 String tipoEmpleado, String jornadaTrabajo, BigDecimal salario) {
 			
@@ -126,13 +171,5 @@ public class EmpleadoRRHHService {
 		}
 
 
-/*
-		public void modifyEmpleado(int id, EmpleadoRRHH empleado) {
-			EmpleadoRRHH e = empleadoRRHHRepository.findById(id);
-			
-			empleado.getValues()
-			
-			
-		}*/
 		
 }

@@ -31,7 +31,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-
+/**
+ * Clase que permite modelar a todo tipo de empleado que esté en la empresa.
+ * Hereda de persona, y será llamada desde el cliente para realizar el apartado de
+ * analítica.
+ * Permite ser visualizada a medida que se va modificando.
+ * 
+ * @author nr_alberto
+ *
+ */
 @Entity
 @Table(name = "empleado_rrhh")
 public class EmpleadoRRHH extends Persona {
@@ -48,7 +56,7 @@ public class EmpleadoRRHH extends Persona {
 		@Column(name="pk_id_nro_empleado")		
 		private Integer nroEmpleado;
 		
-		@Getter @Setter
+		//@Getter @Setter
 		@Size(min = 8, max = 9, message = "Debe tener entre 8 y 9 valores")   // Se da pie a que la implementación 
 		@Column(name="dni", unique = true)	  								  // use la letra o no; aunque para otro tipo
 		private String dni;												      // de documento no español deba sufrir variaciones
